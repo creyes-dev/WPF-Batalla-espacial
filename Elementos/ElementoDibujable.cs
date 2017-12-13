@@ -23,9 +23,9 @@ namespace WPF_BatallaEspacial.Elementos
             Canvas = canvas;
         }
 
-        protected abstract void Dibujarse();
+        public abstract void Dibujarse();
         
-        protected void Removerse()
+        public void Removerse()
         {
             Canvas.Children.Remove(elementoDibujable);
         }

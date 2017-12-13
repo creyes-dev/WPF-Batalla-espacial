@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -66,6 +67,8 @@
     <Compile Include="Elementos\Nave.cs" />
     <Compile Include="Elementos\NaveEnemiga.cs" />
     <Compile Include="Elementos\NaveJugador.cs" />
+    <Compile Include="Graficos\AnimacionFrameSprites.cs" />
+    <Compile Include="Logica\Juego.cs" />
     <Compile Include="Logica\Nivel.cs" />
     <Compile Include="Logica\NivelFactory.cs" />
     <Compile Include="MainWindow.xaml.cs">

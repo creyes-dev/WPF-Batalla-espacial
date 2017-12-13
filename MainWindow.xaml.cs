@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF_BatallaEspacial.Logica;
-using WPF_BatallaEspacial.Elementos;
 
 namespace WPF_BatallaEspacial
 {
@@ -22,20 +21,17 @@ namespace WPF_BatallaEspacial
     /// </summary>
     public partial class MainWindow : Window
     {
-        Nivel nivelActual; 
+        private Juego juego;
 
         public MainWindow()
         {
             InitializeComponent();
+            juego = new Juego(BatallaEspacialCanvas, this);
         }
 
         private void Canvas_Loaded(object sender, RoutedEventArgs e)
         {
-            this.BatallaEspacialCanvas.Children.Clear();
-
-            nivelActual = NivelFactory.Construir(1, BatallaEspacialCanvas);
-            nivelActual.Jugador.CargarEnCanvas();
-
+            juego.IniciarJuego();
         }
 
     }

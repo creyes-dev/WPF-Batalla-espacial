@@ -14,8 +14,11 @@ namespace WPF_BatallaEspacial.Elementos
     {
         public List<Disparo> Disparos { get; set; }
         public bool EstaViva { get; set; }
+
         public bool EstaInvisible { get; set; }     // TODO: NO estoy seguro de que tengan que ser properties
         public bool EstaInvencible { get; set; }
+        protected int periodoInvisibilidad;
+        protected int periodoInvencibilidad;
         
         protected DispatcherTimer timer;
 
@@ -25,24 +28,19 @@ namespace WPF_BatallaEspacial.Elementos
 
         protected Random numeroAlAzar;
 
-        protected int periodoInvisibilidad;
-        protected int periodoInvencibilidad;
-
-        public int PeriodoUltimoDisparo { get; set; }
-
         public Nave(string nombre, Canvas canvas, 
                     int posicionX, int posicionY, int ancho, int largo) 
             : base(nombre, canvas, posicionX, posicionY, ancho, largo)
         {
-            Disparos = new List<Disparo>();
-            //this.CargarImagen();
-
             numeroAlAzar = new Random();
-
+            Disparos = new List<Disparo>();
+            
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 0, 5);
             //timer.Tick += new EventHandler(NaveJugador_XXX); // Evento de detener la transparencia
             timer.Start();
+
+            EstaViva = true;
         }
 
         // TODO: El template method puede ser una implementacion de un metodo abstracto
@@ -73,9 +71,10 @@ namespace WPF_BatallaEspacial.Elementos
             Canvas.Children.Add(Imagen);
             Canvas.SetLeft(Imagen, this.Posicion.PosicionX);
             Canvas.SetTop(Imagen, this.Posicion.PosicionY);
+            Canvas.SetZIndex(Imagen, 3);
         }
 
-        protected override void Dibujarse()
+        public override void Dibujarse()
         {
             if (!EstaInvisible)
             {
@@ -90,6 +89,12 @@ namespace WPF_BatallaEspacial.Elementos
                 {
                     Canvas.SetLeft(elementoDibujable, this.Posicion.PosicionX);
                 }
+            }
+
+            foreach (Disparo disparo in Disparos)
+            {
+                disparo.PosicionY -= 10;
+                disparo.Redibujar();
             }
         }
 
