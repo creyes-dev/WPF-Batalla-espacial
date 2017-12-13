@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPF_BatallaEspacial.Logica
+namespace WPF_BatallaEspacial.Elementos
 {
-    class LogicaJuego
+    public class NaveEnemiga
     {
     }
 }

@@ -64,8 +64,8 @@
     <Compile Include="Elementos\Disparo.cs" />
     <Compile Include="Elementos\ElementoDibujable.cs" />
     <Compile Include="Elementos\Nave.cs" />
+    <Compile Include="Elementos\NaveEnemiga.cs" />
     <Compile Include="Elementos\NaveJugador.cs" />
-    <Compile Include="Logica\LogicaJuego.cs" />
     <Compile Include="Logica\Nivel.cs" />
     <Compile Include="Logica\NivelFactory.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -105,6 +105,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Imagenes\player.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\rayo1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

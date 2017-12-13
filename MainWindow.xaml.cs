@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_BatallaEspacial.Logica;
+using WPF_BatallaEspacial.Elementos;
 
 namespace WPF_BatallaEspacial
 {
@@ -20,6 +22,8 @@ namespace WPF_BatallaEspacial
     /// </summary>
     public partial class MainWindow : Window
     {
+        Nivel nivelActual; 
+
         public MainWindow()
         {
             InitializeComponent();
@@ -27,24 +31,10 @@ namespace WPF_BatallaEspacial
 
         private void Canvas_Loaded(object sender, RoutedEventArgs e)
         {
-            // Crear una figura y animarla
-            //IGeneradorCamino genCaminosOndulados = new GeneradorCaminoOndulado();
-            //IGeneradorCamino genCaminoZigZag = new GeneradorCaminoZigZag();
-            //IGeneradorCamino genCaminoLinea = new GeneradorCaminoLinea();
-            //IGeneradorCamino genCaminoCurvas = new GeneradorCaminoCurvas();
+            this.BatallaEspacialCanvas.Children.Clear();
 
-            //Figura alien = new Figura(this.Canvas, genCaminosOndulados, "alien", "alien.png", 64, 64, 100, 0);
-            //alien.AnimarFigura(Direccion.Derecha, 3, false);
-
-            //Figura alien3 = new Figura(this.Canvas, genCaminoLinea, "car", "car-loading.PNG", 64, 64, 100, 0);
-            //alien3.AnimarFigura(Direccion.Derecha, 3, false);
-
-            //Figura galleta = new Figura(this.Canvas, genCaminoZigZag, "galleta", "galleta.png", 64, 64, 300, 0);
-            //galleta.AnimarFigura(Direccion.Derecha, 5, false);
-
-            //Figura chromium = new Figura(this.Canvas, genCaminoCurvas, "chromium", "Chromium.png", 64, 64, 500, 0);
-            //chromium.AnimarFigura(Direccion.Derecha, 3, false);
-
+            nivelActual = NivelFactory.Construir(1, BatallaEspacialCanvas);
+            nivelActual.Jugador.CargarEnCanvas();
 
         }
 

@@ -9,44 +9,43 @@ using System.Windows.Media.Imaging;
 namespace WPF_BatallaEspacial.Elementos
 {
     public class NaveJugador : Nave
-    {
-
-
-        public NaveJugador(string nombre, Canvas canvas, string directorioImagen, 
-            int posicionX, int posicionY, int ancho, int largo,
-            string directorioImagenDisparo, string directorioImagenAnimacionDestruccion)
-            : base(nombre, canvas, directorioImagen,
-            posicionX, posicionY, ancho, largo, 
-            directorioImagenDisparo, directorioImagenAnimacionDestruccion)
+    {   
+        public NaveJugador( string nombre, Canvas canvas, 
+                            int posicionX, int posicionY, int ancho, int largo)
+            : base(nombre, canvas, posicionX, posicionY, ancho, largo)
         {
 
         }
 
-        protected override void Dibujarse()
+        protected override void AsignarDirectoriosImagenes()
         {
-            if (!EstaInvisible)
-            {
-                elementoDibujable = (Image)this.elementoDibujable;
+            rutaRelativaImagenNave = "../Imagenes/player.png";
+            rutaRelativaImagenDisparo = "../Imagenes/rayo1.png";
+            rutaRelativaImagenDestruccion = "../Imagenes/player.png";
+        }
 
-                if (EstaInvencible)
+        public override void Disparar()
+        {
+
+        }
+
+        public override void Desplazarse(ObjetosComunes.Direccion direccion)
+        {
+            if (EstaViva)
+            {
+                if (direccion == ObjetosComunes.Direccion.Izquierda)
                 {
-                    // Cuando está invencible parpadea
-                    elementoDibujable.Opacity = numeroAlAzar.Next(4, 9) / 10.0;
+                    if (Posicion.PosicionX < 5)
+                        Posicion.PosicionY = 0;
+                    else
+                        Posicion.PosicionX -= 5;
                 }
                 else
                 {
-                    Canvas.SetLeft(elementoDibujable, this.Posicion.PosicionX);
-
-                    //foreach (Disparo disparo in disparos)
-                    //{
-                    //    disparo.PosicionY -= 10;
-                    //    disparo.Redibujar();
-                    //}
+                    Posicion.PosicionX += 5;
                 }
             }
         }
 
-        public abstract void Disparar();
-        public abstract void Desplazarse(ObjetosComunes.Direccion direccion);
     }
 }
