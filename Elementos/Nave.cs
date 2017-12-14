@@ -36,7 +36,7 @@ namespace WPF_BatallaEspacial.Elementos
             Disparos = new List<Disparo>();
             
             timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 0, 5);
+            timer.Interval = new TimeSpan(0, 0, 0, 16);
             //timer.Tick += new EventHandler(NaveJugador_XXX); // Evento de detener la transparencia
             timer.Start();
 
@@ -96,49 +96,29 @@ namespace WPF_BatallaEspacial.Elementos
                 disparo.PosicionY -= 10;
                 disparo.Redibujar();
             }
+
+            List<Disparo> disparosFueraRango = new List<Disparo>();
+
+            foreach (Disparo disparo in Disparos)
+            {
+                disparo.PosicionY -= 5;
+
+                if (disparo.PosicionY < 0 - disparo.Largo || disparo.PosicionY > Canvas.Height + disparo.Largo)
+                {
+                    Canvas.Children.Remove(disparo.SpriteSheet);
+                    disparosFueraRango.Add(disparo);
+                }
+                disparo.Redibujar();
+            }
+
+            foreach (Disparo disparoFueraRango in disparosFueraRango)
+            {
+                Disparos.Remove(disparoFueraRango);
+            }
         }
 
         public abstract void Disparar();
         public abstract void Desplazarse(Direccion direccion);
-
-        //public override void Disparar()
-        //{
-        //    // TODO: cambiar
-        //    //DisparoDisponible = true;
-
-        //    //if (EstaViva && DisparoDisponible)
-        //    //{
-        //    //    // Obtener la localizacion del origen del disparo (punto medio de la nave)
-        //    //    int puntoInicioDisparoX = (int)(this.PosicionX + (this.Tamanio / 2.0));
-        //    //    int puntoInicioDisparoY = (int)(this.PosicionY + (this.Tamanio / 2.0));
-
-        //    //    puntoInicioDisparoX = (int)(puntoInicioDisparoX - (7.0 / 2.0)); // TODO
-
-        //    //    string rutaImagenDisparo = @"img/rayo1.png";
-        //    //    Disparo disparo = new Disparo(canvas, "vuv", puntoInicioDisparoX, 500, 7, 32, rutaImagenDisparo);
-        //    //    this.disparos.Add(disparo);
-        //    //}
-        //}
-
-        //public override void Desplazarse(ObjetosComunes.Direccion direccion)
-        //{
-        //    if (EstaViva)
-        //    {
-        //        if (direccion == ObjetosComunes.Direccion.Izquierda)
-        //        {
-        //            if (Posicion.PosicionX < 5)
-        //                Posicion.PosicionY = 0;
-        //            else
-        //                Posicion.PosicionX -= 5;
-        //        }
-        //        else
-        //        {
-        //            Posicion.PosicionX += 5;
-        //        }
-        //    }
-        //}
-        
-        // Eventos subscribibles al tick del timer
 
 
     }

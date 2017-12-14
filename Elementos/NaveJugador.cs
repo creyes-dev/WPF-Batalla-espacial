@@ -37,8 +37,8 @@ namespace WPF_BatallaEspacial.Elementos
                 if (periodoDesdeUltimoDisparo >= periodoDisponibilidadNuevoDisparo)
                 {
                     // Obtener la localizacion del origen del disparo (punto medio de la nave)
-                    int puntoInicioDisparoX = (int)(this.Posicion.PosicionX + (this.Dimenciones.Ancho / 2.0));
-                    int puntoInicioDisparoY = (int)(this.Posicion.PosicionY + (this.Dimenciones.Largo / 2.0));
+                    int puntoInicioDisparoX = (int)(Posicion.PosicionX + (Dimenciones.Ancho / 2.0));
+                    int puntoInicioDisparoY = (int)(Posicion.PosicionY + (Dimenciones.Largo / 2.0));
 
                     // TODO: El nombre del disparo se debe definir en la clase abstracta nave
                     Disparo disparo = new Disparo(Canvas, "Disparo" + numeroAlAzar.Next(0, 32199170).ToString(), puntoInicioDisparoX, puntoInicioDisparoY, 7, 32, rutaRelativaImagenDisparo);

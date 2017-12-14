@@ -48,7 +48,7 @@ namespace WPF_BatallaEspacial.Elementos
         public void CargarImagen(string rutaImagen)
         {
             SpriteSheet = new Image();
-            SpriteSheet.Source = new BitmapImage(new Uri(rutaImagen, UriKind.Relative));
+            SpriteSheet.Source = new BitmapImage(new Uri(rutaImagen, UriKind.Relative)); // ..imagenes..rayo
             SpriteSheet.Name = Nombre;
             SpriteSheet.Height = Largo;
             SpriteSheet.Width = Ancho;
