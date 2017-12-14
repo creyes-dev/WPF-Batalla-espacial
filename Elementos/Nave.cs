@@ -93,22 +93,22 @@ namespace WPF_BatallaEspacial.Elementos
 
             foreach (Disparo disparo in Disparos)
             {
-                disparo.PosicionY -= 10;
-                disparo.Redibujar();
+                disparo.Posicion.PosicionY -= 5;
+                disparo.Dibujarse();
             }
 
             List<Disparo> disparosFueraRango = new List<Disparo>();
 
             foreach (Disparo disparo in Disparos)
             {
-                disparo.PosicionY -= 5;
+                disparo.Posicion.PosicionY -= 5;
 
-                if (disparo.PosicionY < 0 - disparo.Largo || disparo.PosicionY > Canvas.Height + disparo.Largo)
+                if (disparo.Posicion.PosicionY < 0 - disparo.Dimenciones.Largo || disparo.Posicion.PosicionY > Canvas.Height + disparo.Dimenciones.Largo)
                 {
                     Canvas.Children.Remove(disparo.SpriteSheet);
                     disparosFueraRango.Add(disparo);
                 }
-                disparo.Redibujar();
+                disparo.Dibujarse();
             }
 
             foreach (Disparo disparoFueraRango in disparosFueraRango)

@@ -41,7 +41,7 @@ namespace WPF_BatallaEspacial.Elementos
                     int puntoInicioDisparoY = (int)(Posicion.PosicionY + (Dimenciones.Largo / 2.0));
 
                     // TODO: El nombre del disparo se debe definir en la clase abstracta nave
-                    Disparo disparo = new Disparo(Canvas, "Disparo" + numeroAlAzar.Next(0, 32199170).ToString(), puntoInicioDisparoX, puntoInicioDisparoY, 7, 32, rutaRelativaImagenDisparo);
+                    Disparo disparo = new Disparo("Disparo" + numeroAlAzar.Next(0, 32199170).ToString(), this.Canvas, puntoInicioDisparoX, puntoInicioDisparoY, 7, 32, rutaRelativaImagenDisparo);
                     Disparos.Add(disparo);
 
                     periodoDesdeUltimoDisparo = 0;

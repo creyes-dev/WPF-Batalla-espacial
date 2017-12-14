@@ -9,35 +9,19 @@ using System.Windows.Media.Imaging;
 
 namespace WPF_BatallaEspacial.Elementos
 {
-    public class Disparo
+    public class Disparo : ElementoDibujable
     {
-        public string Nombre { get; set; }
-        public int Ancho { get; set; }
-        public int Largo { get; set; }
-
-        public int PosicionX { get; set; }
-        public int PosicionY { get; set; }
-
-        public Canvas canvas { get; set; }
-
         public Image SpriteSheet { get; set; }
         AnimacionFrameSprites animacion { get; set; }
 
-        public Disparo(Canvas lienzo, string nombre, int puntoX, int puntoY, int ancho, int largo, string rutaImagen)
+        public Disparo(string nombre, Canvas canvas, int posicionX, int posicionY, int ancho, int largo, string rutaImagen)
+            : base(nombre, canvas, posicionX, posicionY, ancho, largo)
         {
-            Nombre = nombre;
-            Ancho = ancho;
-            Largo = largo; // TODO: Alto no largo
-            PosicionX = puntoX;
-            PosicionY = puntoY;
-
-            canvas = lienzo;
-
             CargarImagen(rutaImagen);
 
-            canvas.Children.Add(SpriteSheet);
-            Canvas.SetLeft(SpriteSheet, puntoX);
-            Canvas.SetTop(SpriteSheet, puntoY);
+            this.Canvas.Children.Add(SpriteSheet);
+            Canvas.SetLeft(SpriteSheet, posicionX);
+            Canvas.SetTop(SpriteSheet, posicionY);
 
             string rutaFramesAnimacion = Environment.CurrentDirectory + @"\Imagenes\rayo1.png"; // TODO: COrregir
             animacion = new AnimacionFrameSprites(rutaFramesAnimacion, ancho, largo, 1, 16, SpriteSheet);
@@ -50,14 +34,14 @@ namespace WPF_BatallaEspacial.Elementos
             SpriteSheet = new Image();
             SpriteSheet.Source = new BitmapImage(new Uri(rutaImagen, UriKind.Relative)); // ..imagenes..rayo
             SpriteSheet.Name = Nombre;
-            SpriteSheet.Height = Largo;
-            SpriteSheet.Width = Ancho;
+            SpriteSheet.Height = Dimenciones.Largo;
+            SpriteSheet.Width = Dimenciones.Ancho;
         }
 
-        public void Redibujar()
+        public override void Dibujarse()
         {
-            Canvas.SetTop(SpriteSheet, this.PosicionX);
-            Canvas.SetTop(SpriteSheet, this.PosicionY);
+            Canvas.SetTop(SpriteSheet, Posicion.PosicionX);
+            Canvas.SetTop(SpriteSheet, Posicion.PosicionY);
         }
 
     }
