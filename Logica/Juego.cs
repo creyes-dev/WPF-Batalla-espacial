@@ -32,6 +32,11 @@ namespace WPF_BatallaEspacial.Logica
 
             nivelActual = NivelFactory.Construir(1, canvas);
             nivelActual.Jugador.CargarEnCanvas();
+            
+            foreach (NaveEnemiga nave in nivelActual.NavesEnemigas)
+	        {
+		        nave.CargarEnCanvas();
+	        }
 
             IniciarCiclosJuego();
         }
@@ -47,6 +52,10 @@ namespace WPF_BatallaEspacial.Logica
         private void ProcesarCiclo(object sender, EventArgs e)
         {
             // Mostrar puntaje
+            foreach (NaveEnemiga nave in nivelActual.NavesEnemigas)
+            {
+                nave.Dibujarse();
+            }
 
             if (nivelActual.Jugador.Vidas == 0)
             {

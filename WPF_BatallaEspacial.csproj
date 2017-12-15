@@ -68,6 +68,8 @@
     <Compile Include="Elementos\NaveEnemiga.cs" />
     <Compile Include="Elementos\NaveJugador.cs" />
     <Compile Include="Graficos\AnimacionFrameSprites.cs" />
+    <Compile Include="Graficos\GeneradorCaminoLinea.cs" />
+    <Compile Include="Graficos\IGeneradorCamino.cs" />
     <Compile Include="Logica\Juego.cs" />
     <Compile Include="Logica\Nivel.cs" />
     <Compile Include="Logica\NivelFactory.cs" />

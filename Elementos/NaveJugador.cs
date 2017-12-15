@@ -12,15 +12,17 @@ namespace WPF_BatallaEspacial.Elementos
     {
         public int Vidas { get; set; }
 
-        public int periodoDisponibilidadNuevoDisparo;
-        public int periodoDesdeUltimoDisparo;
+        protected int periodoRecuperacionDisparo;
+        protected int periodoDesdeUltimoDisparo;
 
         public NaveJugador( string nombre, Canvas canvas, 
                             int posicionX, int posicionY, int ancho, int largo)
             : base(nombre, canvas, posicionX, posicionY, ancho, largo)
         {
+            jugador = true;
             Vidas = 3;
-            periodoDisponibilidadNuevoDisparo = 0;
+            periodoRecuperacionDisparo = 0;
+            periodoInvencibilidad = 2000;
         }
 
         protected override void AsignarDirectoriosImagenes()
@@ -34,7 +36,7 @@ namespace WPF_BatallaEspacial.Elementos
         {
             if (EstaViva)
             {
-                if (periodoDesdeUltimoDisparo >= periodoDisponibilidadNuevoDisparo)
+                if (periodoDesdeUltimoDisparo >= periodoRecuperacionDisparo)
                 {
                     // Obtener la localizacion del origen del disparo (punto medio de la nave)
                     int puntoInicioDisparoX = (int)(Posicion.PosicionX + (Dimenciones.Ancho / 2.0));
@@ -46,6 +48,15 @@ namespace WPF_BatallaEspacial.Elementos
 
                     periodoDesdeUltimoDisparo = 0;
                 }
+            }
+        }
+
+        public override void MoverDisparos()
+        {
+            foreach (Disparo disparo in Disparos)
+            {
+                disparo.Posicion.PosicionY -= 5;
+                disparo.Dibujarse();
             }
         }
 

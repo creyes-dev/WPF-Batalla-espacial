@@ -21,10 +21,15 @@ namespace WPF_BatallaEspacial.Elementos
         protected int periodoInvencibilidad;
         
         protected DispatcherTimer timer;
+        protected bool jugador; // TODO: Eliminar
 
         protected string rutaRelativaImagenNave;
         protected string rutaRelativaImagenDisparo;
         protected string rutaRelativaImagenDestruccion;
+
+        public int PeriodoRecuperacionDisparo { get; set; }
+
+        protected int periodoDesdeUltimoDisparo;
 
         protected Random numeroAlAzar;
 
@@ -74,6 +79,11 @@ namespace WPF_BatallaEspacial.Elementos
             Canvas.SetZIndex(Imagen, 3);
         }
 
+        // TODO: Actualizar
+        // 1. Dibujarse (Diferencias entre el jugador y una nave enemiga)
+        // 2. Mover sus propios disparos
+        // 3. Actualizar coordenadas (Diferencias entre el jugador y una nave enemiga)
+
         public override void Dibujarse()
         {
             if (!EstaInvisible)
@@ -87,22 +97,25 @@ namespace WPF_BatallaEspacial.Elementos
                 }
                 else
                 {
-                    Canvas.SetLeft(elementoDibujable, this.Posicion.PosicionX);
+                    if (jugador)
+                    {
+                        Canvas.SetLeft(elementoDibujable, this.Posicion.PosicionX);
+                    }
+                    else
+                    {
+                        Desplazarse(Direccion.Derecha);
+                    }
                 }
+
+                periodoDesdeUltimoDisparo = periodoDesdeUltimoDisparo + 1;
             }
 
-            foreach (Disparo disparo in Disparos)
-            {
-                disparo.Posicion.PosicionY -= 5;
-                disparo.Dibujarse();
-            }
+            MoverDisparos();
 
             List<Disparo> disparosFueraRango = new List<Disparo>();
 
             foreach (Disparo disparo in Disparos)
             {
-                disparo.Posicion.PosicionY -= 5;
-
                 if (disparo.Posicion.PosicionY < 0 - disparo.Dimenciones.Largo || disparo.Posicion.PosicionY > Canvas.Height + disparo.Dimenciones.Largo)
                 {
                     Canvas.Children.Remove(disparo.SpriteSheet);
@@ -117,9 +130,9 @@ namespace WPF_BatallaEspacial.Elementos
             }
         }
 
+        public abstract void MoverDisparos();
         public abstract void Disparar();
         public abstract void Desplazarse(Direccion direccion);
-
-
+        
     }
 }
