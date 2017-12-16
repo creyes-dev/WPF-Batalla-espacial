@@ -11,9 +11,7 @@ namespace WPF_BatallaEspacial.Elementos
     public class NaveJugador : Nave
     {
         public int Vidas { get; set; }
-
         protected int periodoRecuperacionDisparo;
-        protected int periodoDesdeUltimoDisparo;
 
         public NaveJugador( string nombre, Canvas canvas, 
                             int posicionX, int posicionY, int ancho, int largo)
@@ -25,11 +23,16 @@ namespace WPF_BatallaEspacial.Elementos
             periodoInvencibilidad = 2000;
         }
 
+        protected override void Redibujar()
+        {
+            Canvas.SetLeft(elementoDibujable, this.Posicion.PosicionX);
+        }
+
         protected override void AsignarDirectoriosImagenes()
         {
             rutaRelativaImagenNave = "../Imagenes/player.png";
             rutaRelativaImagenDisparo = "../Imagenes/rayo1.png";
-            rutaRelativaImagenDestruccion = "../Imagenes/player.png";
+            rutaRelativaImagenDestruccion = "../Imagenes/player_explosion.png";
         }
 
         public override void Disparar()
@@ -51,7 +54,15 @@ namespace WPF_BatallaEspacial.Elementos
             }
         }
 
-        public override void MoverDisparos()
+        protected override void ActualizarCoordenadas()
+        {
+            // Hook method:
+            // No es necesario obtener las coordenadas para el jugador 
+            // porque automáticamente al moverse se actualiza 
+            // Direccion.PosicionX y Direccion.PosicionY
+        }
+
+        protected override void MoverDisparos()
         {
             foreach (Disparo disparo in Disparos)
             {

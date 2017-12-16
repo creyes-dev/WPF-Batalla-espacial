@@ -52,6 +52,8 @@ namespace WPF_BatallaEspacial.Graficos
                 {
                     timer.Tick += new EventHandler(AnimarFrameCiclos);
                 }
+
+                nroFramePorDefecto = nroFramePorDefecto;
                 timer.Interval = new TimeSpan(0, 0, 0, 0, framesPorMilisegundo);
                 timer.Start();
                 this.CargarSiguienteFrame();

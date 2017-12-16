@@ -29,7 +29,7 @@ namespace WPF_BatallaEspacial.Elementos
         {
             Canvas.Children.Remove(elementoDibujable);
         }
-
+                
     }
 }
 

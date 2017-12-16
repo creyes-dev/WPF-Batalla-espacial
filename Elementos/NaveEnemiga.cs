@@ -23,6 +23,7 @@ namespace WPF_BatallaEspacial.Elementos
         // contenedor de animaciones de la figura
         Path camino;
         Storyboard storyboard;
+        bool enMovimiento;
 
         // componentes horizontales y verticales de la animación que sigue el camino
         DoubleAnimationUsingPath animacionEjeX;
@@ -41,16 +42,81 @@ namespace WPF_BatallaEspacial.Elementos
             PeriodoRecuperacionDisparo = 10;
         }
 
+        // Implementación del método abstracto para asociar las imagenes que 
+        // se monstrarán en el canvas
+        protected override void AsignarDirectoriosImagenes()
+        {
+            rutaRelativaImagenNave = "../Imagenes/player.png";
+            rutaRelativaImagenDisparo = "../Imagenes/rayo1.png";
+            rutaRelativaImagenDestruccion = "../Imagenes/player_explosion.png";
+        }
+
+        // Implementación del método abstracto para desplazar la nave
         public override void Desplazarse(ObjetosComunes.Direccion direccion)
         {
             AnimarDesplazamiento(direccion);
         }
 
+        // Implementación del método abstracto para disparar
+        public override void Disparar()
+        {
+            if (EstaViva && !EstaInvencible)
+            {
+                if (periodoDesdeUltimoDisparo >= PeriodoRecuperacionDisparo)
+                {
+                    // Obtener la localizacion del origen del disparo (punto medio de la nave)
+                    int puntoInicioDisparoX = (int)(Posicion.PosicionX + (Dimenciones.Ancho / 2.0));
+                    int puntoInicioDisparoY = (int)(Posicion.PosicionY + (Dimenciones.Largo / 2.0));
+
+                    // TODO: El nombre del disparo se debe definir en la clase abstracta nave
+                    Disparo disparo = new Disparo("Disparo" + numeroAlAzar.Next(0, 32199170).ToString(), this.Canvas, puntoInicioDisparoX, puntoInicioDisparoY, 7, 32, rutaRelativaImagenDisparo);
+                    Disparos.Add(disparo);
+
+                    periodoDesdeUltimoDisparo = 0;
+                }
+                periodoDesdeUltimoDisparo += 1;
+            }
+        }
+
+        // Implementación de los pasos del TemplateMethod de dibujar
+        
+        // 2. Obtener coordenadas
+        protected override void ActualizarCoordenadas()
+        {
+            Point coordenadaRelativa = elementoDibujable.PointToScreen(new Point(0, 0));
+            Point coordenadaCanvas = Canvas.PointFromScreen(new Point(0, 0));
+
+            int coordenadaAbsolutaY = Convert.ToInt32(coordenadaRelativa.Y) + Convert.ToInt32(coordenadaCanvas.Y);
+            int coordenadaAbsolutaX = Convert.ToInt32(coordenadaRelativa.X) + Convert.ToInt32(coordenadaCanvas.X);
+
+            Posicion.PosicionX = coordenadaAbsolutaX;
+            Posicion.PosicionY = coordenadaAbsolutaY;
+        }
+
+        // 3. Redibujar
+        protected override void Redibujar()
+        {
+            // TODO: Corregir, no me parece correcto que redibujar = Desplazarse
+            AnimarDesplazamiento(Direccion.Derecha);
+        }
+
+        // 4. Mover los disparos
+        protected override void MoverDisparos()
+        {
+            // La nave enemiga puede disparar en cualquier momento
+            Disparar();
+
+            foreach (Disparo disparo in Disparos)
+            {
+                disparo.Posicion.PosicionY += 5;
+                disparo.Dibujarse();
+            }
+        }
+
         protected void AnimarDesplazamiento(Direccion direccion)
         {
-            if (camino == null)
+            if (!enMovimiento)
             {
-
                 Image imagen = (Image)this.elementoDibujable;
 
                 string nombreAnimacion = Nombre + "_animacion";
@@ -110,37 +176,8 @@ namespace WPF_BatallaEspacial.Elementos
 
                 // Iniciar la animación
                 storyboard.Begin(Canvas);
-            }
-        }
 
-        public override void Disparar()
-        {
-            if (EstaViva && !EstaInvencible)
-            {
-                if (periodoDesdeUltimoDisparo >= PeriodoRecuperacionDisparo)
-                {
-                    // Obtener la localizacion del origen del disparo (punto medio de la nave)
-                    int puntoInicioDisparoX = (int)(Posicion.PosicionX + (Dimenciones.Ancho / 2.0));
-                    int puntoInicioDisparoY = (int)(Posicion.PosicionY + (Dimenciones.Largo / 2.0));
-
-                    // TODO: El nombre del disparo se debe definir en la clase abstracta nave
-                    Disparo disparo = new Disparo("Disparo" + numeroAlAzar.Next(0, 32199170).ToString(), this.Canvas, puntoInicioDisparoX, puntoInicioDisparoY, 7, 32, rutaRelativaImagenDisparo);
-                    Disparos.Add(disparo);
-
-                    periodoDesdeUltimoDisparo = 0;
-                }
-            }
-        }
-
-        public override void MoverDisparos()
-        {
-            // La nave enemiga dispara.
-            Disparar();
-
-            foreach (Disparo disparo in Disparos)
-            {
-                disparo.Posicion.PosicionY += 5;
-                disparo.Dibujarse();
+                enMovimiento = true;
             }
         }
 
@@ -177,13 +214,6 @@ namespace WPF_BatallaEspacial.Elementos
 
             // Iniciar la animación
             storyboard.Begin(Canvas, true);
-        }
-
-        protected override void AsignarDirectoriosImagenes()
-        {
-            rutaRelativaImagenNave = "../Imagenes/player.png";
-            rutaRelativaImagenDisparo = "../Imagenes/rayo1.png";
-            rutaRelativaImagenDestruccion = "../Imagenes/player.png";
         }
 
     }
