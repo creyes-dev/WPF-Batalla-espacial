@@ -64,6 +64,7 @@
     </Compile>
     <Compile Include="Elementos\Disparo.cs" />
     <Compile Include="Elementos\ElementoDibujable.cs" />
+    <Compile Include="Elementos\EstadoNave.cs" />
     <Compile Include="Elementos\Nave.cs" />
     <Compile Include="Elementos\NaveEnemiga.cs" />
     <Compile Include="Elementos\NaveJugador.cs" />

@@ -33,13 +33,17 @@ namespace WPF_BatallaEspacial.Elementos
 
         public NaveEnemiga(string nombre, Canvas canvas, 
                             int posicionX, int posicionY, int ancho, int largo,
-                            int duracionDesplazamiento = 5)
+                            int duracionDesplazamiento = 5, 
+                            int periodoInvisibilidad = 0, 
+                            int periodoModoSigilo = 0)
             : base(nombre, canvas, posicionX, posicionY, ancho, largo)
         {
             jugador = false;
             DuracionDesplazamiento = duracionDesplazamiento;
             generadorCaminos = new GeneradorCaminoLinea();
             PeriodoRecuperacionDisparo = 10;
+            PeriodoInvisibilidad = periodoInvisibilidad;
+            PeriodoModoSigilo = periodoModoSigilo;
         }
 
         // Implementación del método abstracto para asociar las imagenes que 
@@ -58,11 +62,11 @@ namespace WPF_BatallaEspacial.Elementos
         }
 
         // Implementación del método abstracto para disparar
-        public override void Disparar()
+        public override void IniciarDisparo()
         {
-            if (EstaViva && !EstaInvencible)
+            if (Estado == EstadoNave.ModoBatalla)
             {
-                if (periodoDesdeUltimoDisparo >= PeriodoRecuperacionDisparo)
+                if (PeriodoDesdeUltimoDisparo >= PeriodoRecuperacionDisparo)
                 {
                     // Obtener la localizacion del origen del disparo (punto medio de la nave)
                     int puntoInicioDisparoX = (int)(Posicion.PosicionX + (Dimenciones.Ancho / 2.0));
@@ -72,9 +76,9 @@ namespace WPF_BatallaEspacial.Elementos
                     Disparo disparo = new Disparo("Disparo" + numeroAlAzar.Next(0, 32199170).ToString(), this.Canvas, puntoInicioDisparoX, puntoInicioDisparoY, 7, 32, rutaRelativaImagenDisparo);
                     Disparos.Add(disparo);
 
-                    periodoDesdeUltimoDisparo = 0;
+                    PeriodoDesdeUltimoDisparo = 0;
                 }
-                periodoDesdeUltimoDisparo += 1;
+                PeriodoDesdeUltimoDisparo += 1;
             }
         }
 

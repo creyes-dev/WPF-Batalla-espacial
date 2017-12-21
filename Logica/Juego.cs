@@ -71,7 +71,9 @@ namespace WPF_BatallaEspacial.Logica
                 if (Keyboard.IsKeyDown(Key.Space))
                     nivelActual.Jugador.Disparar();
 
+                // Probando que tal
                 nivelActual.Jugador.Dibujarse();
+                
             }
 
             // Control de colisiones
@@ -104,7 +106,7 @@ namespace WPF_BatallaEspacial.Logica
         // o una nave enemiga ha impactado en el jugador
         private void ControlarColisionesNavesEnemigas()
         {
-            if (nivelActual.Jugador.EstaViva)
+            if (nivelActual.Jugador.Estado == EstadoNave.ModoBatalla)
             {
 
                 // Si el disparo de una nave enemiga ha impactado en el jugador
@@ -121,7 +123,7 @@ namespace WPF_BatallaEspacial.Logica
                 // la toca entonces destruir ambas naves
                 foreach (NaveEnemiga naveEnemiga in nivelActual.NavesEnemigas)
                 {
-                    if (naveEnemiga.EstaViva)
+                    if (naveEnemiga.Estado == EstadoNave.ModoBatalla)
                     {
                         if (HayColision(naveEnemiga, nivelActual.Jugador))
                         {
@@ -142,7 +144,7 @@ namespace WPF_BatallaEspacial.Logica
             {
                 foreach (NaveEnemiga naveEnemiga in nivelActual.NavesEnemigas)
                 {
-                    if (naveEnemiga.EstaViva)
+                    if (naveEnemiga.Estado == EstadoNave.ModoBatalla)
                     {
                         if (HayColision(naveEnemiga, disparo))
                         {

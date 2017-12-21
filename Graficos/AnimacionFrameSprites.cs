@@ -17,6 +17,7 @@ namespace WPF_BatallaEspacial.Graficos
         int NumeroFramePorDefecto { get; set; }
         int numeroFrame { get; set; }
         DispatcherTimer timer { get; set; }
+        public bool Finalizada { get; set; }
 
         public AnimacionFrameSprites(string rutaArchivo, int anchoFrameSprite, int altoFrameSprite,
             int cantFilasFramesSprite, int cantColumnasFramesSprite, System.Windows.Controls.Image imagenDefecto)
@@ -38,7 +39,7 @@ namespace WPF_BatallaEspacial.Graficos
             imagenDefecto = new System.Windows.Controls.Image();
         }
 
-        public void IniciarAnimacion(int framesPorMilisegundo, bool animarSoloUnaVez, int nroFramePorDefecto)
+        public void IniciarAnimacion(int framesPorMilisegundo, bool animarSoloUnaVez, int nroFramePorDefecto = 0)
         {
             if (!timer.IsEnabled)
             {
@@ -53,7 +54,7 @@ namespace WPF_BatallaEspacial.Graficos
                     timer.Tick += new EventHandler(AnimarFrameCiclos);
                 }
 
-                nroFramePorDefecto = nroFramePorDefecto;
+                NumeroFramePorDefecto = nroFramePorDefecto;
                 timer.Interval = new TimeSpan(0, 0, 0, 0, framesPorMilisegundo);
                 timer.Start();
                 this.CargarSiguienteFrame();

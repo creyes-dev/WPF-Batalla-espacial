@@ -14,6 +14,7 @@ namespace WPF_BatallaEspacial.Elementos
         public string Nombre { get; set; }
         protected Canvas Canvas { get; set; }
         protected UIElement elementoDibujable;
+        public bool Removible { get; set; }
 
         public ElementoDibujable(string nombre, Canvas canvas, 
             int posicionX, int posicionY, int ancho, int largo)
