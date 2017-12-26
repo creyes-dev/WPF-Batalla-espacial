@@ -64,10 +64,12 @@
     </Compile>
     <Compile Include="Elementos\Disparo.cs" />
     <Compile Include="Elementos\ElementoDibujable.cs" />
+    <Compile Include="Elementos\Espacio.cs" />
     <Compile Include="Elementos\EstadoNave.cs" />
     <Compile Include="Elementos\Nave.cs" />
     <Compile Include="Elementos\NaveEnemiga.cs" />
     <Compile Include="Elementos\NaveJugador.cs" />
+    <Compile Include="Graficos\Animacion.cs" />
     <Compile Include="Graficos\AnimacionFrameSprites.cs" />
     <Compile Include="Graficos\GeneradorCaminoLinea.cs" />
     <Compile Include="Graficos\IGeneradorCamino.cs" />
@@ -118,6 +120,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\rayo1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\rayo2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

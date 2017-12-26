@@ -30,8 +30,11 @@ namespace WPF_BatallaEspacial.Logica
         {
             // Limpiar el canvas
             canvas.Children.Clear();
-
             nivelActual = NivelFactory.Construir(1, canvas);
+
+            nivelActual.Espacio.CargarEnCanvas();
+            nivelActual.Espacio.DesplazarImagen(0, -1521 + 1011, 8, true);
+
             nivelActual.Jugador.CargarEnCanvas();
             
             foreach (NaveEnemiga nave in nivelActual.NavesEnemigas)
@@ -73,7 +76,6 @@ namespace WPF_BatallaEspacial.Logica
 
                 // Probando que tal
                 nivelActual.Jugador.Dibujarse();
-                
             }
 
             // Control de colisiones

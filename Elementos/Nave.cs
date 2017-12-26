@@ -195,8 +195,7 @@ namespace WPF_BatallaEspacial.Elementos
         protected void DefinirOpacidad()
         {
             elementoDibujable.Opacity = 10;
-
-            if (Estado == EstadoNave.Invisible)
+            if (Estado == EstadoNave.Invisible || Estado == EstadoNave.ModoSigilo) 
                 elementoDibujable.Opacity = 0;
             else
                 if (Estado == EstadoNave.Invulnerable)
@@ -234,6 +233,7 @@ namespace WPF_BatallaEspacial.Elementos
                 Image imagenNave = (Image)elementoDibujable;
                 animacion = new AnimacionFrameSprites(rutaFramesAnimacion, Dimenciones.Ancho, Dimenciones.Largo, 1, 18, imagenNave);
                 animacion.IniciarAnimacion(16, true); // TODO: Frame por defecto es un parametro por defecto...
+                Vidas = Vidas - 1; // TODO :Cuidado!
                 Estado = EstadoNave.Destruida;
             }
         }

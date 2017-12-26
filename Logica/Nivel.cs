@@ -10,11 +10,13 @@ namespace WPF_BatallaEspacial.Logica
     public class Nivel
     {
         public int NroNivel { get; set; }
+        public Espacio Espacio { get; set; }
         public NaveJugador Jugador { get; set; }
         public List<NaveEnemiga> NavesEnemigas { get; set; }
         
-        public Nivel(int nroNivel, NaveJugador jugador, List<NaveEnemiga> navesEnemigas)
+        public Nivel(Espacio espacio, int nroNivel, NaveJugador jugador, List<NaveEnemiga> navesEnemigas)
         {
+            Espacio = espacio;
             NroNivel = nroNivel;
             Jugador = jugador;
             NavesEnemigas = navesEnemigas;

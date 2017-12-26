@@ -9,6 +9,8 @@ namespace WPF_BatallaEspacial.ObjetosComunes
     public enum Direccion
     {
         Derecha,
-        Izquierda
+        Izquierda,
+        Superior,
+        Inferior
     }
 }

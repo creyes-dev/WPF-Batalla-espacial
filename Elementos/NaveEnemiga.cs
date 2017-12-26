@@ -35,7 +35,8 @@ namespace WPF_BatallaEspacial.Elementos
                             int posicionX, int posicionY, int ancho, int largo,
                             int duracionDesplazamiento = 5, 
                             int periodoInvisibilidad = 0, 
-                            int periodoModoSigilo = 0)
+                            int periodoModoSigilo = 0,
+                            int vidas = 1)
             : base(nombre, canvas, posicionX, posicionY, ancho, largo)
         {
             jugador = false;
@@ -44,6 +45,7 @@ namespace WPF_BatallaEspacial.Elementos
             PeriodoRecuperacionDisparo = 10;
             PeriodoInvisibilidad = periodoInvisibilidad;
             PeriodoModoSigilo = periodoModoSigilo;
+            Vidas = vidas;
         }
 
         // Implementación del método abstracto para asociar las imagenes que 
@@ -119,69 +121,72 @@ namespace WPF_BatallaEspacial.Elementos
 
         protected void AnimarDesplazamiento(Direccion direccion)
         {
-            if (!enMovimiento)
+            if (Estado == EstadoNave.ModoSigilo || Estado == EstadoNave.ModoBatalla)
             {
-                Image imagen = (Image)this.elementoDibujable;
+                if (!enMovimiento)
+                {
+                    Image imagen = (Image)this.elementoDibujable;
 
-                string nombreAnimacion = Nombre + "_animacion";
+                    string nombreAnimacion = Nombre + "_animacion";
 
-                // La animación de transformación es instanciada, registrada y asociada a la imagen 
-                TransformGroup grupoTransformaciones = new TransformGroup();
-                imagen.RenderTransform = grupoTransformaciones;
+                    // La animación de transformación es instanciada, registrada y asociada a la imagen 
+                    TransformGroup grupoTransformaciones = new TransformGroup();
+                    imagen.RenderTransform = grupoTransformaciones;
 
-                TranslateTransform animacionTranslateTransform = new TranslateTransform();
-                this.Canvas.RegisterName(nombreAnimacion, animacionTranslateTransform);
-                grupoTransformaciones.Children.Add(animacionTranslateTransform);
+                    TranslateTransform animacionTranslateTransform = new TranslateTransform();
+                    this.Canvas.RegisterName(nombreAnimacion, animacionTranslateTransform);
+                    grupoTransformaciones.Children.Add(animacionTranslateTransform);
 
-                // Obtiene un camino con forma de onda y orientada hacia la dirección del movimiento
-                PathGeometry caminoOnda = generadorCaminos.ObtenerCamino(direccion,
-                    Posicion.PosicionY, 0, Convert.ToInt32(this.Canvas.Width - 64));
-                caminoOnda.Freeze();
+                    // Obtiene un camino con forma de onda y orientada hacia la dirección del movimiento
+                    PathGeometry caminoOnda = generadorCaminos.ObtenerCamino(direccion,
+                        Posicion.PosicionY, 0, Convert.ToInt32(this.Canvas.Width - 64));
+                    caminoOnda.Freeze();
 
-                // Registrar el camino en el canvas
-                Path nuevoCamino = new Path();
-                nuevoCamino.Data = caminoOnda;
+                    // Registrar el camino en el canvas
+                    Path nuevoCamino = new Path();
+                    nuevoCamino.Data = caminoOnda;
 
-                camino = nuevoCamino;
-                Canvas.Children.Add(camino);
+                    camino = nuevoCamino;
+                    Canvas.Children.Add(camino);
 
-                // Crear la animación que mueve la figura horizontalmente
-                animacionEjeX = new DoubleAnimationUsingPath();
-                animacionEjeX.PathGeometry = caminoOnda;
-                animacionEjeX.Duration = TimeSpan.FromSeconds(DuracionDesplazamiento);
-                animacionEjeX.Source = PathAnimationSource.X; // movimiento sobre el eje X
+                    // Crear la animación que mueve la figura horizontalmente
+                    animacionEjeX = new DoubleAnimationUsingPath();
+                    animacionEjeX.PathGeometry = caminoOnda;
+                    animacionEjeX.Duration = TimeSpan.FromSeconds(DuracionDesplazamiento);
+                    animacionEjeX.Source = PathAnimationSource.X; // movimiento sobre el eje X
 
-                // Asociar la animación para que oriente la propiedad X de
-                // la animación de transformación
-                Storyboard.SetTargetName(animacionEjeX, nombreAnimacion);
-                Storyboard.SetTargetProperty(animacionEjeX,
-                    new PropertyPath(TranslateTransform.XProperty));
+                    // Asociar la animación para que oriente la propiedad X de
+                    // la animación de transformación
+                    Storyboard.SetTargetName(animacionEjeX, nombreAnimacion);
+                    Storyboard.SetTargetProperty(animacionEjeX,
+                        new PropertyPath(TranslateTransform.XProperty));
 
-                // Crear la animación que mueve la figura verticalmente
-                animacionEjeY = new DoubleAnimationUsingPath();
-                animacionEjeY.PathGeometry = caminoOnda;
-                animacionEjeY.Duration = TimeSpan.FromSeconds(DuracionDesplazamiento);
-                animacionEjeY.Source = PathAnimationSource.Y; // movimiento sobre el eje Y
+                    // Crear la animación que mueve la figura verticalmente
+                    animacionEjeY = new DoubleAnimationUsingPath();
+                    animacionEjeY.PathGeometry = caminoOnda;
+                    animacionEjeY.Duration = TimeSpan.FromSeconds(DuracionDesplazamiento);
+                    animacionEjeY.Source = PathAnimationSource.Y; // movimiento sobre el eje Y
 
-                // Asociar la animacion para que oriente la propiedad Y de
-                // la animación de transformación
-                Storyboard.SetTargetName(animacionEjeY, nombreAnimacion);
-                Storyboard.SetTargetProperty(animacionEjeY,
-                    new PropertyPath(TranslateTransform.YProperty));
+                    // Asociar la animacion para que oriente la propiedad Y de
+                    // la animación de transformación
+                    Storyboard.SetTargetName(animacionEjeY, nombreAnimacion);
+                    Storyboard.SetTargetProperty(animacionEjeY,
+                        new PropertyPath(TranslateTransform.YProperty));
 
-                // Crear el Storyboard para contener y aplicar las animaciones
-                storyboard = new Storyboard();
-                //pathAnimationStoryboard.RepeatBehavior = RepeatBehavior.Forever;
-                storyboard.Children.Add(animacionEjeX);
-                storyboard.Children.Add(animacionEjeY);
+                    // Crear el Storyboard para contener y aplicar las animaciones
+                    storyboard = new Storyboard();
+                    //pathAnimationStoryboard.RepeatBehavior = RepeatBehavior.Forever;
+                    storyboard.Children.Add(animacionEjeX);
+                    storyboard.Children.Add(animacionEjeY);
 
-                // Suscribir el procedimiento que atiende la finalización de la animación
-                animacionEjeX.Completed += AnimacionCompletada;
+                    // Suscribir el procedimiento que atiende la finalización de la animación
+                    animacionEjeX.Completed += AnimacionCompletada;
 
-                // Iniciar la animación
-                storyboard.Begin(Canvas);
+                    // Iniciar la animación
+                    storyboard.Begin(Canvas);
 
-                enMovimiento = true;
+                    enMovimiento = true;
+                }
             }
         }
 

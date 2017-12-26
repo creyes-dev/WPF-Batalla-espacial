@@ -29,7 +29,7 @@ namespace WPF_BatallaEspacial.Elementos
         protected override void AsignarDirectoriosImagenes()
         {
             rutaRelativaImagenNave = "../Imagenes/player.png";
-            rutaRelativaImagenDisparo = "../Imagenes/rayo1.png";
+            rutaRelativaImagenDisparo = "../Imagenes/rayo2.png";
             rutaRelativaImagenDestruccion = "../Imagenes/player_explosion.png";
         }
 
