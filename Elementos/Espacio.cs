@@ -19,24 +19,29 @@ namespace WPF_BatallaEspacial.Elementos
     {
         string rutaRelativaImagenEspacio;
         Storyboard storyboardDesplazamiento;
+        List<ElementoDibujable> Planetas;
+        Random numeroAlAzar;
 
         public Espacio(string nombre, Canvas canvas,
                     int posicionX, int posicionY, int ancho, int largo)
             : base(nombre, canvas, posicionX, posicionY, ancho, largo)
         {
-
+            Planetas = new List<ElementoDibujable>();
+            numeroAlAzar = new Random();
         }
 
         public override void Dibujarse()
         {
-            CargarEnCanvas();
-        }
-
-        public void CargarEnCanvas()
-        {
             AsignarDirectoriosImagenes();
             CargarImagen();
             PosicionarImagenEnCanvas();
+
+            GenerarPlanetas();
+
+            foreach (Planeta planeta in Planetas)
+            {
+                planeta.Dibujarse();
+            }
         }
 
         private void AsignarDirectoriosImagenes()
@@ -90,6 +95,20 @@ namespace WPF_BatallaEspacial.Elementos
             }
 
             storyboardDesplazamiento.Begin(Canvas, true);
+        }
+
+        private void GenerarPlanetas()
+        {
+            int cantPlanetas = numeroAlAzar.Next(1, 5);
+
+            for (int i = 1; i < cantPlanetas; i++)
+            {
+                int coordenadaX = numeroAlAzar.Next(0, 200);
+                int coordenadaY = numeroAlAzar.Next(0, 200);
+
+                Planeta planeta = new Planeta("planeta1", Canvas, coordenadaX, coordenadaY, 150, 150);
+                Planetas.Add(planeta);
+            }
         }
 
     }

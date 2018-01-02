@@ -124,20 +124,20 @@ namespace WPF_BatallaEspacial.Elementos
                 {
                     if (Estado == EstadoNave.Invisible)
                     {
-                        if (PeriodoDesdeInvisibilidad < PeriodoInvisibilidad)
+                        if (PeriodoDesdeInvisibilidad < PeriodoInvisibilidad) 
                         {
                             PeriodoDesdeInvisibilidad += 1;
                         }
                         else
                         {
-                            if (Vidas > 0)
+                           if (Vidas > 0) // TODO: AND Disparos. != 0, no se... es invisible cuando no tenes vidas y cuando no tenga disparos queda removible
                             {
                                 PeriodoDesdeModoSigilo = 0;
-                                Estado = EstadoNave.ModoSigilo;
+                                Estado = EstadoNave.ModoSigilo; // TODO: Fin del modo de invisibilidad (si posee vidas es modo sigilo)
                             }
                             else
                             {
-                                Removible = true;
+                                Removible = true; // Todo: Fin del modo invisibilidad
                             }
                         }
                     }
@@ -164,17 +164,20 @@ namespace WPF_BatallaEspacial.Elementos
                                 }
                                 else
                                 {
+                                    // TODO: 
+                                    // Luego de que pase la animación si o si dejar invisible
+                                    // porque si tiene disparos todavia dejarlo invisible
+                                    // porque si ya no tiene disparos dejarlo invisible
+
                                     if (Vidas == 0)
                                     {
                                         if (Disparos.Count > 0)
-                                        {
-                                            PeriodoDesdeInvisibilidad = 0;
-                                            Estado = EstadoNave.Invisible;
-                                        }
+                                            Removible = false;
                                         else
-                                        {
                                             Removible = true;
-                                        }
+
+                                        PeriodoDesdeInvisibilidad = 0;
+                                        Estado = EstadoNave.Invisible;
                                     }
                                     else
                                     {
@@ -234,6 +237,7 @@ namespace WPF_BatallaEspacial.Elementos
                 animacion = new AnimacionFrameSprites(rutaFramesAnimacion, Dimenciones.Ancho, Dimenciones.Largo, 1, 18, imagenNave);
                 animacion.IniciarAnimacion(16, true); // TODO: Frame por defecto es un parametro por defecto...
                 Vidas = Vidas - 1; // TODO :Cuidado!
+		        PeriodoDesdeDestruccion = 0;
                 Estado = EstadoNave.Destruida;
             }
         }

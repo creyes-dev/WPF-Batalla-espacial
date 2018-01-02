@@ -32,7 +32,7 @@ namespace WPF_BatallaEspacial.Logica
             canvas.Children.Clear();
             nivelActual = NivelFactory.Construir(1, canvas);
 
-            nivelActual.Espacio.CargarEnCanvas();
+            nivelActual.Espacio.Dibujarse();
             nivelActual.Espacio.DesplazarImagen(0, -1521 + 1011, 8, true);
 
             nivelActual.Jugador.CargarEnCanvas();
@@ -55,12 +55,6 @@ namespace WPF_BatallaEspacial.Logica
 
         private void ProcesarCiclo(object sender, EventArgs e)
         {
-            // Redibujar los elementos del juego
-            foreach (NaveEnemiga nave in nivelActual.NavesEnemigas)
-            {
-                nave.Dibujarse();
-            }
-
             if (nivelActual.Jugador.Vidas == 0)
             {
                 string gameover = "";
@@ -73,15 +67,20 @@ namespace WPF_BatallaEspacial.Logica
                     nivelActual.Jugador.Desplazarse(Direccion.Derecha);
                 if (Keyboard.IsKeyDown(Key.Space))
                     nivelActual.Jugador.Disparar();
-
-                // Probando que tal
-                nivelActual.Jugador.Dibujarse();
             }
 
             // Control de colisiones
             ControlarColisionesNavesEnemigas();
             ControlarColisionesJugador();
+
+            // Redibujar elementos
+            nivelActual.Jugador.Dibujarse();
             
+            foreach (NaveEnemiga nave in nivelActual.NavesEnemigas)
+            {
+                nave.Dibujarse();
+            }
+
             // Mostrar puntaje
         
             // Verificar si ha terminado la partida
@@ -151,6 +150,7 @@ namespace WPF_BatallaEspacial.Logica
                         if (HayColision(naveEnemiga, disparo))
                         {
                             naveEnemiga.Destruirse();
+            
                         }
                     }
                 }
