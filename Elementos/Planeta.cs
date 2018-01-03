@@ -13,46 +13,56 @@ namespace WPF_BatallaEspacial.Elementos
 {
     public class Planeta : ElementoDibujable
     {
+        Color ColorCentral;
+        Color ColorBorde;
 
         public Planeta( string nombre, Canvas canvas, 
-                        int posicionX, int posicionY, int ancho, int largo)
+                        int posicionX, int posicionY, int ancho, int largo,
+                        Color colorCentral, Color colorBorde)
             : base(nombre, canvas, posicionX, posicionY, ancho, largo)
         {
-
+            ColorCentral = colorCentral;
+            ColorBorde = colorBorde;
         }
 
         public override void Dibujarse()
         {
-        //    CargarImagen();
-        //    PosicionarEnCanvas();
-
+            // Crear figura
             Ellipse elipsePlaneta = new Ellipse();
             elipsePlaneta.Name = Nombre;
-            elipsePlaneta.Width = 150;
-            elipsePlaneta.Height = 150;
-            elipsePlaneta.Fill = Brushes.Azure;
+            elipsePlaneta.Width = Dimenciones.Ancho;
+            elipsePlaneta.Height = Dimenciones.Largo;
             elipsePlaneta.Visibility = Visibility.Visible;
 
+            // Generar el relleno del elipse
+            RadialGradientBrush radialGradient = new RadialGradientBrush();
+            radialGradient.GradientOrigin = new Point(0.5, 0.5);
+
+            // Set the gradient center to the center of the area being painted.
+            radialGradient.Center = new Point(0.5, 0.5);
+
+            // Set the radius of the gradient circle so that it extends to
+            // the edges of the area being painted.
+            radialGradient.RadiusX = 0.5;
+            radialGradient.RadiusY = 0.5;
+
+            // Create four gradient stops.
+            radialGradient.GradientStops.Add(new GradientStop(ColorCentral, 0.1));
+            radialGradient.GradientStops.Add(new GradientStop(ColorBorde, 1));
+
+            // Freeze the brush (make it unmodifiable) for performance benefits.
+            radialGradient.Freeze();
+
+            elipsePlaneta.Fill = radialGradient;
+
+            // Asignar el elipse a la variable del elemento dibujable
+            elementoDibujable = elipsePlaneta;
+
+            // Cargar en canvas
             Canvas.Children.Add(elipsePlaneta);
             Canvas.SetLeft(elipsePlaneta, this.Posicion.PosicionX);
             Canvas.SetTop(elipsePlaneta, this.Posicion.PosicionY);
             Canvas.SetZIndex(elipsePlaneta, 0);
-        }
-
-        private void CargarImagen()
-        {
-
-
-            //elementoDibujable = elipsePlaneta;
-        }
-
-        private void PosicionarEnCanvas()
-        {
-        //    Ellipse elipse = (Ellipse)elementoDibujable;
-        //    Canvas.Children.Add(elipse);
-        //    Canvas.SetLeft(elipse, this.Posicion.PosicionX);
-        //    Canvas.SetTop(elipse, this.Posicion.PosicionY);
-        //    Canvas.SetZIndex(elipse, 5);
         }
 
     }

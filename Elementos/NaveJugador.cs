@@ -77,13 +77,16 @@ namespace WPF_BatallaEspacial.Elementos
                 if (direccion == ObjetosComunes.Direccion.Izquierda)
                 {
                     if (Posicion.PosicionX < 5)
-                        Posicion.PosicionY = 0;
+                        Posicion.PosicionX = 0;
                     else
                         Posicion.PosicionX -= 5;
                 }
                 else
                 {
-                    Posicion.PosicionX += 5;
+                    if (Posicion.PosicionX >= Canvas.Width - Dimenciones.Ancho)
+                        Posicion.PosicionX = (int)Canvas.Width - Dimenciones.Ancho;
+                    else
+                        Posicion.PosicionX += 5;
                 }
             }
         }

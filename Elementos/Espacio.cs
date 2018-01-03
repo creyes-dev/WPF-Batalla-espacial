@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Windows.Navigation;
@@ -99,16 +100,41 @@ namespace WPF_BatallaEspacial.Elementos
 
         private void GenerarPlanetas()
         {
-            int cantPlanetas = numeroAlAzar.Next(1, 5);
+            int cantPlanetas = numeroAlAzar.Next(1, 6);
 
             for (int i = 1; i < cantPlanetas; i++)
             {
-                int coordenadaX = numeroAlAzar.Next(0, 200);
-                int coordenadaY = numeroAlAzar.Next(0, 200);
+                int radio = numeroAlAzar.Next(25, 150);
 
-                Planeta planeta = new Planeta("planeta1", Canvas, coordenadaX, coordenadaY, 150, 150);
+                int coordenadaX = numeroAlAzar.Next(0, (int)Canvas.Width - (radio*2));
+                int coordenadaY = numeroAlAzar.Next(0, (int)Canvas.Height - (radio*2));
+
+                Color color1 = ObtenerColorPlaneta();
+                Color color2 = ObtenerColorPlaneta();
+
+                // TODO: Nombre del planeta
+                Planeta planeta = new Planeta("planeta1" + numeroAlAzar.Next(0, 32199170), Canvas, coordenadaX, coordenadaY, radio, radio, color1, color2);
                 Planetas.Add(planeta);
             }
+        }
+
+        private Color ObtenerColorPlaneta()
+        {
+            int numeroColor = numeroAlAzar.Next(0, 9);
+
+            Color color = Colors.Black;
+            if (numeroColor == 0) color = Colors.DarkGray;
+            if (numeroColor == 1) color = Colors.Blue;
+            if (numeroColor == 2) color = Colors.BlueViolet;
+            if (numeroColor == 3) color = Colors.DarkBlue;
+            if (numeroColor == 4) color = Colors.DarkGreen;
+            if (numeroColor == 5) color = Colors.ForestGreen;
+            if (numeroColor == 6) color = Colors.Red;
+            if (numeroColor == 7) color = Colors.GreenYellow;
+            if (numeroColor == 8) color = Colors.Yellow;
+            if (numeroColor == 9) color = Colors.Orange;
+
+            return color;
         }
 
     }
