@@ -17,27 +17,26 @@ namespace WPF_BatallaEspacial.Logica
             Espacio espacio = new Espacio("Espacio", canvas, 0, 0, 900, 1521);
             NaveJugador jugador = new NaveJugador("jugador", canvas, 20, 400, 64, 64);
 
-
             int duracionDesplazamiento = 5;
             int periodoInvisibilidad = numeroAzar.Next(0, 200);
             int periodoSigilo = numeroAzar.Next(0, 200);
 
             List<NaveEnemiga> navesEnemigas = new List<NaveEnemiga>();
-            NaveEnemiga naveEnemiga = new NaveEnemiga("NaveEnemiga1", canvas, 0, 0, 64, 64, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
+            NaveEnemiga naveEnemiga = new NaveEnemiga("NaveEnemiga1", canvas, 0, 0, 64, 64, 0, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
 
             duracionDesplazamiento = 5;
             periodoInvisibilidad = numeroAzar.Next(0, 200);
             periodoSigilo = numeroAzar.Next(0, 200);
 
             List<NaveEnemiga> navesEnemigas2 = new List<NaveEnemiga>();
-            NaveEnemiga naveEnemiga2 = new NaveEnemiga("NaveEnemiga2", canvas, 0, 0, 64, 64, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
+            NaveEnemiga naveEnemiga2 = new NaveEnemiga("NaveEnemiga2", canvas, 0, 0, 64, 64, 0, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
 
             duracionDesplazamiento = 5;
             periodoInvisibilidad = numeroAzar.Next(0, 200);
             periodoSigilo = numeroAzar.Next(0, 200);
 
             List<NaveEnemiga> navesEnemigas3 = new List<NaveEnemiga>();
-            NaveEnemiga naveEnemiga3 = new NaveEnemiga("NaveEnemiga", canvas, 0, 0, 64, 64, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
+            NaveEnemiga naveEnemiga3 = new NaveEnemiga("NaveEnemiga", canvas, 0, 0, 64, 64, 0, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
 
             navesEnemigas.Add(naveEnemiga);
             navesEnemigas.Add(naveEnemiga2);

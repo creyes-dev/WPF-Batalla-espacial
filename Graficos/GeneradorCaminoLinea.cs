@@ -21,7 +21,7 @@ namespace WPF_BatallaEspacial.Graficos
         /// <param name="valorMinimoX">Punto minimo de X</param>
         /// <param name="valorMaximoX">Punto máximo de X</param>
         /// <returns></returns>
-        public PathGeometry ObtenerCamino(Direccion orientacion, int puntoNeutroY, int valorMinimoX, int valorMaximoX)
+        public PathGeometry ObtenerCamino(Direccion orientacion, int puntoNeutroY, int valorMinimoX, int valorMaximoX, Posicion posicionInicial)
         {
             PathGeometry camino = new PathGeometry();
             PathFigure caminoFigura = new PathFigure();
@@ -31,14 +31,8 @@ namespace WPF_BatallaEspacial.Graficos
 
             // El camino inicia desde puntos distintos dependiendo si la orientación es 
             // hacia la izquierda o hacia la derecha
-            if (orientacion == Direccion.Derecha)
-            {
-                caminoFigura.StartPoint = new Point(valorMinimoX, puntoNeutroY);
-            }
-            else
-            {
-                caminoFigura.StartPoint = new Point(valorMaximoX, puntoNeutroY);
-            }
+
+            caminoFigura.StartPoint = new Point(posicionInicial.PosicionX, puntoNeutroY);
 
             PolyLineSegment segmentoLineal = new PolyLineSegment();
 
@@ -47,7 +41,6 @@ namespace WPF_BatallaEspacial.Graficos
 
             // Determinar la coordenada de X en el punto inicial y el punto final
             // Determinar los puntos máximos y mínimos de Y en las dos partes de un ciclo
-            int posicionInicial;
             int posicionFinal;
             int puntoExtremoYPrimerCiclo = puntoNeutroY - 100;
             int puntoExtremoYSegundoCiclo = puntoNeutroY + 100;
@@ -56,18 +49,16 @@ namespace WPF_BatallaEspacial.Graficos
             {
                 // Si la figura se desplazará hacia la derecha: 
                 // La figura comenzará desde el valor mínimo de X hasta el máximo
-                posicionInicial = 0;
                 posicionFinal = Convert.ToInt32(valorMaximoX);
             }
             else
             {
-                posicionInicial = Convert.ToInt32(valorMaximoX);
-                posicionFinal = 0;
+                posicionFinal = valorMinimoX;
             }
 
             int adelantoRetraso;
             int cantCiclos = 3;
-            int posicionXActual = posicionInicial;
+            int posicionXActual = posicionInicial.PosicionX;
             
             Random numero = new Random();
 

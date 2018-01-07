@@ -20,6 +20,7 @@ namespace WPF_BatallaEspacial.Elementos
     {
         public int DuracionDesplazamiento { get; set; }
         public int Puntaje { get; set; }
+        public int PosicionVerticalPorDefecto;
         // contenedor de animaciones de la figura
         Path camino;
         Storyboard storyboard;
@@ -33,6 +34,7 @@ namespace WPF_BatallaEspacial.Elementos
 
         public NaveEnemiga(string nombre, Canvas canvas, 
                             int posicionX, int posicionY, int ancho, int largo,
+                            int posicionVerticalPorDefecto,
                             int duracionDesplazamiento = 5, 
                             int periodoInvisibilidad = 0, 
                             int periodoModoSigilo = 0,
@@ -42,6 +44,7 @@ namespace WPF_BatallaEspacial.Elementos
             jugador = false;
             DuracionDesplazamiento = duracionDesplazamiento;
             generadorCaminos = new GeneradorCaminoLinea();
+            PosicionVerticalPorDefecto = posicionVerticalPorDefecto;
             PeriodoRecuperacionDisparo = 10;
             PeriodoInvisibilidad = periodoInvisibilidad;
             PeriodoModoSigilo = periodoModoSigilo;
@@ -139,7 +142,7 @@ namespace WPF_BatallaEspacial.Elementos
 
                     // Obtiene un camino con forma de onda y orientada hacia la dirección del movimiento
                     PathGeometry caminoOnda = generadorCaminos.ObtenerCamino(direccion,
-                        Posicion.PosicionY, 0, Convert.ToInt32(this.Canvas.Width - 64));
+                        Posicion.PosicionY, 0, Convert.ToInt32(this.Canvas.Width - 64), this.Posicion);
                     caminoOnda.Freeze();
 
                     // Registrar el camino en el canvas
@@ -199,24 +202,20 @@ namespace WPF_BatallaEspacial.Elementos
             Point coordenadaFigura = imagen.PointToScreen(new Point(0, 0));
             Point coordenadaCanvas = Canvas.PointFromScreen(new Point(0, 0));
 
-            // Posicion de la figura en la ventana = posicion del canvas + 
+            // Posicion de la figura en la ventana = posicion del canvas + posicion de la figura
+
+            // TODO: Modificar porque no es cero lo que estas buscando sino coordenadaCanvas.x
+            // TODO: Por que Posicion.PosicionX No vale cero y posicionXAlien si?
+            // TODO: Cambiale el nombre
             int posicionXAlien = Convert.ToInt32(coordenadaFigura.X) + Convert.ToInt32(coordenadaCanvas.X);
-            bool moverHaciaDerecha = (posicionXAlien == 0);
+            int posicionYAlien = Convert.ToInt32(coordenadaFigura.Y) + Convert.ToInt32(coordenadaCanvas.Y);
+
+            Direccion direccionNave = Direccion.Izquierda;
+            if (posicionXAlien == 0) direccionNave = Direccion.Derecha;
 
             Canvas.Children.Remove(camino);
-
-            PathGeometry nuevoCamino;
-
-            // Obtiene un camino con forma de onda y orientada hacia la dirección correcta
-            if (moverHaciaDerecha)
-            {
-                nuevoCamino = generadorCaminos.ObtenerCamino(Direccion.Derecha, Posicion.PosicionY, 0, Convert.ToInt32(Canvas.Width - Dimenciones.Ancho));
-            }
-            else
-            {
-                nuevoCamino = generadorCaminos.ObtenerCamino(Direccion.Izquierda, Posicion.PosicionY, 0, Convert.ToInt32(Canvas.Width - Dimenciones.Ancho));
-            }
-
+            PathGeometry nuevoCamino = generadorCaminos.ObtenerCamino(direccionNave, Posicion.PosicionY, 0, Convert.ToInt32(Canvas.Width - Dimenciones.Ancho), Posicion);
+            
             // El componente horizontal y vertical de la animación seguirá el nuevo camino generado
             animacionEjeX.PathGeometry = nuevoCamino;
             animacionEjeY.PathGeometry = nuevoCamino;

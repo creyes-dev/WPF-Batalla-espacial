@@ -11,6 +11,6 @@ namespace WPF_BatallaEspacial.Graficos
 {
     public interface IGeneradorCamino
     {
-        PathGeometry ObtenerCamino(Direccion orientacion, int puntoNeutroY, int valorMinimoX, int valorMaximoX);
+        PathGeometry ObtenerCamino(Direccion orientacion, int puntoNeutroY, int valorMinimoX, int valorMaximoX, Posicion posicionInicial);
     }
 }
