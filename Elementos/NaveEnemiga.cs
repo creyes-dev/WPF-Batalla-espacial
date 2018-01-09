@@ -29,8 +29,8 @@ namespace WPF_BatallaEspacial.Elementos
         // componentes horizontales y verticales de la animación que sigue el camino
         DoubleAnimationUsingPath animacionEjeX;
         DoubleAnimationUsingPath animacionEjeY;
-        
-        IGeneradorCamino generadorCaminos;
+
+        IGeneradorCaminoVuelo generadorCaminos;
 
         public NaveEnemiga(string nombre, Canvas canvas, 
                             int posicionX, int posicionY, int ancho, int largo,
@@ -43,7 +43,7 @@ namespace WPF_BatallaEspacial.Elementos
         {
             jugador = false;
             DuracionDesplazamiento = duracionDesplazamiento;
-            generadorCaminos = new GeneradorCaminoLinea();
+            generadorCaminos = new GeneradorCaminoVueloLineal();
             PosicionVerticalPorDefecto = posicionVerticalPorDefecto;
             PeriodoRecuperacionDisparo = 10;
             PeriodoInvisibilidad = periodoInvisibilidad;
@@ -140,9 +140,14 @@ namespace WPF_BatallaEspacial.Elementos
                     this.Canvas.RegisterName(nombreAnimacion, animacionTranslateTransform);
                     grupoTransformaciones.Children.Add(animacionTranslateTransform);
 
+                    Posicion posicionInicial = new Posicion { PosicionX = 0,
+                                                              PosicionY = this.PosicionVerticalPorDefecto };
+                    Posicion posicionFinal = new Posicion { PosicionX = Convert.ToInt32(this.Canvas.Width - Dimenciones.Ancho),
+                                                            PosicionY = this.PosicionVerticalPorDefecto};
+
                     // Obtiene un camino con forma de onda y orientada hacia la dirección del movimiento
-                    PathGeometry caminoOnda = generadorCaminos.ObtenerCamino(direccion,
-                        Posicion.PosicionY, 0, Convert.ToInt32(this.Canvas.Width - 64), this.Posicion);
+                    int limiteVertical = Convert.ToInt32(Canvas.Height) + Dimenciones.Largo;
+                    PathGeometry caminoOnda = generadorCaminos.ObtenerCamino(posicionInicial, posicionFinal, limiteVertical);
                     caminoOnda.Freeze();
 
                     // Registrar el camino en el canvas
@@ -210,11 +215,23 @@ namespace WPF_BatallaEspacial.Elementos
             int posicionXAlien = Convert.ToInt32(coordenadaFigura.X) + Convert.ToInt32(coordenadaCanvas.X);
             int posicionYAlien = Convert.ToInt32(coordenadaFigura.Y) + Convert.ToInt32(coordenadaCanvas.Y);
 
-            Direccion direccionNave = Direccion.Izquierda;
-            if (posicionXAlien == 0) direccionNave = Direccion.Derecha;
+            Posicion posicionInicial = new Posicion {
+                PosicionX = posicionXAlien,
+                PosicionY = posicionYAlien };
 
+            int posicionXAlienFinal = 0;
+            if (posicionXAlien == 0)
+            {
+                posicionXAlienFinal = Convert.ToInt32(this.Canvas.Width - Dimenciones.Ancho);
+            }
+
+            Posicion posicionFinal = new Posicion {
+                PosicionX = posicionXAlienFinal,
+                PosicionY = this.PosicionVerticalPorDefecto };
+            
             Canvas.Children.Remove(camino);
-            PathGeometry nuevoCamino = generadorCaminos.ObtenerCamino(direccionNave, Posicion.PosicionY, 0, Convert.ToInt32(Canvas.Width - Dimenciones.Ancho), Posicion);
+            int limiteVertical = Convert.ToInt32(Canvas.Height) + Dimenciones.Largo;
+            PathGeometry nuevoCamino = generadorCaminos.ObtenerCamino(posicionInicial, posicionFinal, limiteVertical);
             
             // El componente horizontal y vertical de la animación seguirá el nuevo camino generado
             animacionEjeX.PathGeometry = nuevoCamino;

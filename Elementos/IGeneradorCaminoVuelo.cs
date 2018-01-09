@@ -7,10 +7,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WPF_BatallaEspacial.ObjetosComunes;
 
-namespace WPF_BatallaEspacial.Graficos
+namespace WPF_BatallaEspacial.Elementos
 {
-    public interface IGeneradorCamino
+    public interface IGeneradorCaminoVuelo
     {
-        PathGeometry ObtenerCamino(Direccion orientacion, int puntoNeutroY, int valorMinimoX, int valorMaximoX, Posicion posicionInicial);
+        PathGeometry ObtenerCamino(Posicion posicionInicial, Posicion posicionFinal, int limiteMovimientoVertical);
     }
 }
