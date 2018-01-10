@@ -67,6 +67,7 @@
     <Compile Include="Elementos\Espacio.cs" />
     <Compile Include="Elementos\EstadoNave.cs" />
     <Compile Include="Elementos\GeneradorCaminoVueloLineal.cs" />
+    <Compile Include="Elementos\GeneradorCaminoVueloOndulado.cs" />
     <Compile Include="Elementos\IGeneradorCaminoVuelo.cs" />
     <Compile Include="Elementos\Nave.cs" />
     <Compile Include="Elementos\NaveEnemiga.cs" />
