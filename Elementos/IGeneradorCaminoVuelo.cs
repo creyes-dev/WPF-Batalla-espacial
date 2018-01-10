@@ -11,6 +11,6 @@ namespace WPF_BatallaEspacial.Elementos
 {
     public interface IGeneradorCaminoVuelo
     {
-        PathGeometry ObtenerCamino(Posicion posicionInicial, Posicion posicionFinal, int limiteMovimientoVertical);
+        PathGeometry ObtenerCamino(Posicion posicionInicial, Posicion posicionFinal);
     }
 }

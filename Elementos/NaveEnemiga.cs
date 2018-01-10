@@ -146,8 +146,7 @@ namespace WPF_BatallaEspacial.Elementos
                                                             PosicionY = this.PosicionVerticalPorDefecto};
 
                     // Obtiene un camino con forma de onda y orientada hacia la dirección del movimiento
-                    int limiteVertical = Convert.ToInt32(Canvas.Height) + Dimenciones.Largo;
-                    PathGeometry caminoOnda = generadorCaminos.ObtenerCamino(posicionInicial, posicionFinal, limiteVertical);
+                    PathGeometry caminoOnda = generadorCaminos.ObtenerCamino(posicionInicial, posicionFinal);
                     caminoOnda.Freeze();
 
                     // Registrar el camino en el canvas
@@ -215,12 +214,27 @@ namespace WPF_BatallaEspacial.Elementos
             int posicionXAlien = Convert.ToInt32(coordenadaFigura.X) + Convert.ToInt32(coordenadaCanvas.X);
             int posicionYAlien = Convert.ToInt32(coordenadaFigura.Y) + Convert.ToInt32(coordenadaCanvas.Y);
 
+            // Si la nave queda fuera del rango de vision reposicionarla
+            if (posicionYAlien >= 950)
+            {
+                posicionYAlien = PosicionVerticalPorDefecto;
+
+                if (numeroAlAzar.Next(0, 1) == 0)
+                {
+                    posicionXAlien = Dimenciones.Ancho * -1;
+                }
+                else
+                {
+                    posicionXAlien = Convert.ToInt32(coordenadaCanvas.X + Canvas.Width) + Dimenciones.Ancho;
+                }
+            }
+
             Posicion posicionInicial = new Posicion {
                 PosicionX = posicionXAlien,
                 PosicionY = posicionYAlien };
 
             int posicionXAlienFinal = 0;
-            if (posicionXAlien == 0)
+            if (posicionXAlien <= 0)
             {
                 posicionXAlienFinal = Convert.ToInt32(this.Canvas.Width - Dimenciones.Ancho);
             }
@@ -230,8 +244,7 @@ namespace WPF_BatallaEspacial.Elementos
                 PosicionY = this.PosicionVerticalPorDefecto };
             
             Canvas.Children.Remove(camino);
-            int limiteVertical = Convert.ToInt32(Canvas.Height) + Dimenciones.Largo;
-            PathGeometry nuevoCamino = generadorCaminos.ObtenerCamino(posicionInicial, posicionFinal, limiteVertical);
+            PathGeometry nuevoCamino = generadorCaminos.ObtenerCamino(posicionInicial, posicionFinal);
             
             // El componente horizontal y vertical de la animación seguirá el nuevo camino generado
             animacionEjeX.PathGeometry = nuevoCamino;
