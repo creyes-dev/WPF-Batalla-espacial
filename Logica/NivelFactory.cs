@@ -13,9 +13,17 @@ namespace WPF_BatallaEspacial.Logica
     {
         public static Nivel Construir(int nroNivel, Canvas canvas)
         {
+            int filaJugador = 536;
+            int filaEnemigaDefensor = 164;
+            int filaEnemigaAsalto;
+            int filaEnemigaExplorador;
+
+
             Random numeroAzar = new Random();
             Espacio espacio = new Espacio("Espacio", canvas, 0, 0, 900, 1521);
-            NaveJugador jugador = new NaveJugador("jugador", canvas, 20, 400, 64, 64);
+
+            // TODO: Debe venir por parametros
+            NaveJugador jugador = new NaveJugador("jugador", canvas, 20, filaJugador, 64, 64);
 
             int duracionDesplazamiento = 5;
             int periodoInvisibilidad = numeroAzar.Next(0, 200);

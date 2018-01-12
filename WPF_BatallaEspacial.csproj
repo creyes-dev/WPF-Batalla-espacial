@@ -66,6 +66,7 @@
     <Compile Include="Elementos\ElementoDibujable.cs" />
     <Compile Include="Elementos\Espacio.cs" />
     <Compile Include="Elementos\EstadoNave.cs" />
+    <Compile Include="Elementos\GeneradorCaminoVueloCurvas.cs" />
     <Compile Include="Elementos\GeneradorCaminoVueloLineal.cs" />
     <Compile Include="Elementos\GeneradorCaminoVueloOndulado.cs" />
     <Compile Include="Elementos\IGeneradorCaminoVuelo.cs" />
@@ -128,6 +129,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\rayo2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\enemiga1_explosion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\enemiga1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -232,7 +232,7 @@ namespace WPF_BatallaEspacial.Elementos
         {
             if (Estado == EstadoNave.ModoBatalla)
             {
-                string rutaFramesAnimacion = Environment.CurrentDirectory + @"\Imagenes\player_explosion.png"; // TODO: COrregir
+                string rutaFramesAnimacion = Environment.CurrentDirectory + @"\Imagenes\enemiga1_explosion.png"; // TODO: COrregir
                 Image imagenNave = (Image)elementoDibujable;
                 animacion = new AnimacionFrameSprites(rutaFramesAnimacion, Dimenciones.Ancho, Dimenciones.Largo, 1, 18, imagenNave);
                 animacion.IniciarAnimacion(16, true); // TODO: Frame por defecto es un parametro por defecto...

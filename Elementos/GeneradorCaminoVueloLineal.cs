@@ -12,7 +12,6 @@ namespace WPF_BatallaEspacial.Elementos
 {
     public class GeneradorCaminoVueloLineal : IGeneradorCaminoVuelo
     {
-
         public PathGeometry ObtenerCamino(Posicion posicionInicial, Posicion posicionFinal)
         {
             // El sentido horizontal del desplazamiento depende de la localizacion horizontal
