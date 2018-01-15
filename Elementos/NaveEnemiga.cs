@@ -43,7 +43,7 @@ namespace WPF_BatallaEspacial.Elementos
         {
             jugador = false;
             DuracionDesplazamiento = duracionDesplazamiento;
-            generadorCaminos = new GeneradorCaminoVueloLineal();
+            generadorCaminos = new GeneradorCaminoVueloCurvas();
             PosicionVerticalPorDefecto = posicionVerticalPorDefecto;
             PeriodoRecuperacionDisparo = 10;
             PeriodoInvisibilidad = periodoInvisibilidad;

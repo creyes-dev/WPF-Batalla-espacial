@@ -28,12 +28,11 @@ namespace WPF_BatallaEspacial.Elementos
 
             int anchoCiclo;
             int cantCiclos = 3;
+            int puntoNeutroY = 160;
 
-            int posicionNeutraY = 250;
-
-            int posicionMaximaY = posicionNeutraY - 150;
-            int posicionMinimaY = posicionNeutraY + 150;
-
+            int posicionMaximaY = puntoNeutroY + 64;
+            int posicionMinimaY = puntoNeutroY - 64;
+            
             int posicionXActual = posicionInicial.PosicionX;
             int posicionYActual = posicionInicial.PosicionY;
 
@@ -60,48 +59,45 @@ namespace WPF_BatallaEspacial.Elementos
                 }
 
                 // PosicionXActual es la posicon del ultimo ciclo procesado la posicion actual es la siguiente:
-                int posicionX = posicionXActual;
-
+                int posicionXTemporal = posicionXActual;
+                
                 // Generar puntos intermedios
-                while (posicionX != posicionXActual + (anchoCiclo * direccion))
+                while (posicionXTemporal != posicionXActual + (anchoCiclo * direccion))
                 {
                     if (direccion == 1)
                     {
-                        posicionX = numero.Next(posicionX + 60,
-                                                    posicionX + 120);
+                        posicionXTemporal = numero.Next(posicionXTemporal + 60,
+                                                        posicionXTemporal + 120);
                     }
                     else
                     {
-                        posicionX = numero.Next(posicionX - 120,
-                                                    posicionX - 60);
+                        posicionXTemporal = numero.Next(posicionXTemporal - 120,
+                                                        posicionXTemporal - 60);
                     }
 
-                    posicionNeutraY = numero.Next(posicionNeutraY - 80, posicionNeutraY + 80);
+                    posicionYActual = numero.Next(posicionYActual - 80, posicionYActual + 80);
 
-                    if (((posicionX > posicionXActual + anchoCiclo) && (direccion == 1)) ||
-                        ((posicionX < posicionXActual - anchoCiclo) && (direccion == -1)))
+                    if (((posicionXTemporal > posicionXActual + anchoCiclo) && (direccion == 1)) ||
+                        ((posicionXTemporal < posicionXActual - anchoCiclo) && (direccion == -1)))
                     {
-                        posicionX = posicionXActual + anchoCiclo * direccion;
+                        posicionXTemporal = posicionXActual + anchoCiclo * direccion;
                     }
 
-                    if (posicionNeutraY > posicionMaximaY)
+                    if (posicionYActual > posicionMaximaY)
                     {
-                        posicionNeutraY = posicionMaximaY;
+                        posicionYActual = posicionMaximaY;
                     }
 
-                    if (posicionNeutraY < posicionMinimaY)
+                    if (posicionYActual < posicionMinimaY)
                     {
-                        posicionNeutraY = posicionMinimaY;
+                        posicionYActual = posicionMinimaY;
                     }
 
-                    segmentoBezier.Points.Add(new Point(posicionX, posicionNeutraY));
+                    segmentoBezier.Points.Add(new Point(posicionXTemporal, posicionYActual));
                 }
-
-                posicionXActual = posicionX;
             }
 
             return camino;
         }
-
     }
 }

@@ -14,7 +14,7 @@ namespace WPF_BatallaEspacial.Logica
         public static Nivel Construir(int nroNivel, Canvas canvas)
         {
             int filaJugador = 536;
-            int filaEnemigaDefensor = 164;
+            int filaEnemigaDefensor = 64;
             int filaEnemigaAsalto;
             int filaEnemigaExplorador;
 
@@ -30,21 +30,21 @@ namespace WPF_BatallaEspacial.Logica
             int periodoSigilo = numeroAzar.Next(0, 200);
 
             List<NaveEnemiga> navesEnemigas = new List<NaveEnemiga>();
-            NaveEnemiga naveEnemiga = new NaveEnemiga("NaveEnemiga1", canvas, 0, 0, 64, 64, 0, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
+            NaveEnemiga naveEnemiga = new NaveEnemiga("NaveEnemiga1", canvas, 0, 0, 64, 64, filaEnemigaDefensor, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
 
             duracionDesplazamiento = 5;
             periodoInvisibilidad = numeroAzar.Next(0, 200);
             periodoSigilo = numeroAzar.Next(0, 200);
 
             List<NaveEnemiga> navesEnemigas2 = new List<NaveEnemiga>();
-            NaveEnemiga naveEnemiga2 = new NaveEnemiga("NaveEnemiga2", canvas, 0, 0, 64, 64, 0, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
+            NaveEnemiga naveEnemiga2 = new NaveEnemiga("NaveEnemiga2", canvas, 0, 0, 64, 64, filaEnemigaDefensor, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
 
             duracionDesplazamiento = 5;
             periodoInvisibilidad = numeroAzar.Next(0, 200);
             periodoSigilo = numeroAzar.Next(0, 200);
 
             List<NaveEnemiga> navesEnemigas3 = new List<NaveEnemiga>();
-            NaveEnemiga naveEnemiga3 = new NaveEnemiga("NaveEnemiga", canvas, 0, 0, 64, 64, 0, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
+            NaveEnemiga naveEnemiga3 = new NaveEnemiga("NaveEnemiga", canvas, 0, 0, 64, 64, filaEnemigaDefensor, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
 
             navesEnemigas.Add(naveEnemiga);
             navesEnemigas.Add(naveEnemiga2);
