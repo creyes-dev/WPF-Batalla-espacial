@@ -28,9 +28,9 @@ namespace WPF_BatallaEspacial.Elementos
 
         protected override void AsignarDirectoriosImagenes()
         {
-            rutaRelativaImagenNave = "../Imagenes/player.png";
-            rutaRelativaImagenDisparo = "../Imagenes/rayo2.png";
-            rutaRelativaImagenDestruccion = "../Imagenes/player_explosion.png";
+            rutaAbsolutaImagenNave = Environment.CurrentDirectory + @"\Imagenes\player.png";
+            rutaAbsolutaImagenDisparo = Environment.CurrentDirectory + @"\Imagenes\rayo1.png";
+            rutaAbsolutaImagenDestruccion = Environment.CurrentDirectory + @"\Imagenes\player_explosion.png";
         }
 
         public override void IniciarDisparo()
@@ -45,7 +45,7 @@ namespace WPF_BatallaEspacial.Elementos
                     int puntoInicioDisparoY = (int)(Posicion.PosicionY + (Dimenciones.Largo / 2.0));
 
                     // TODO: El nombre del disparo se debe definir en la clase abstracta nave
-                    Disparo disparo = new Disparo("Disparo" + numeroAlAzar.Next(0, 32199170).ToString(), this.Canvas, puntoInicioDisparoX, puntoInicioDisparoY, 7, 32, rutaRelativaImagenDisparo);
+                    Disparo disparo = new Disparo("Disparo" + numeroAlAzar.Next(0, 32199170).ToString(), this.Canvas, puntoInicioDisparoX, puntoInicioDisparoY, 7, 32, rutaAbsolutaImagenDisparo);
                     Disparos.Add(disparo);
 
                     PeriodoDesdeUltimoDisparo = 0;

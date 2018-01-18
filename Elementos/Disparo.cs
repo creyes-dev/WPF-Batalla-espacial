@@ -23,7 +23,7 @@ namespace WPF_BatallaEspacial.Elementos
             Canvas.SetLeft(SpriteSheet, posicionX);
             Canvas.SetTop(SpriteSheet, posicionY);
 
-            string rutaFramesAnimacion = Environment.CurrentDirectory + @"\Imagenes\rayo1.png"; // TODO: COrregir
+            string rutaFramesAnimacion = rutaImagen;
             animacion = new AnimacionFrameSprites(rutaFramesAnimacion, ancho, largo, 1, 16, SpriteSheet);
 
             animacion.IniciarAnimacion(16, false, 1); // TODO: Frame por defecto es un parametro por defecto... 

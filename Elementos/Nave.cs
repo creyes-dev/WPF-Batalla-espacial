@@ -19,9 +19,9 @@ namespace WPF_BatallaEspacial.Elementos
 
         protected bool jugador; // TODO: Eliminar
 
-        protected string rutaRelativaImagenNave;
-        protected string rutaRelativaImagenDisparo;
-        protected string rutaRelativaImagenDestruccion;
+        protected string rutaAbsolutaImagenNave;
+        protected string rutaAbsolutaImagenDisparo;
+        protected string rutaAbsolutaImagenDestruccion;
 
         public int PeriodoRecuperacionDisparo { get; set; }
         protected int PeriodoDesdeUltimoDisparo;
@@ -53,7 +53,7 @@ namespace WPF_BatallaEspacial.Elementos
         protected void CargarImagen()
         {
             Image Imagen = new Image();
-            Imagen.Source = new BitmapImage(new Uri(rutaRelativaImagenNave, UriKind.Relative));
+            Imagen.Source = new BitmapImage(new Uri(rutaAbsolutaImagenNave, UriKind.Absolute));
             Imagen.Name = "NaveJugador";
             Imagen.Height = this.Dimenciones.Largo;
             Imagen.Width = this.Dimenciones.Ancho;
@@ -232,7 +232,7 @@ namespace WPF_BatallaEspacial.Elementos
         {
             if (Estado == EstadoNave.ModoBatalla)
             {
-                string rutaFramesAnimacion = Environment.CurrentDirectory + @"\Imagenes\enemiga1_explosion.png"; // TODO: COrregir
+                string rutaFramesAnimacion = this.rutaAbsolutaImagenDestruccion; // TODO: COrregir
                 Image imagenNave = (Image)elementoDibujable;
                 animacion = new AnimacionFrameSprites(rutaFramesAnimacion, Dimenciones.Ancho, Dimenciones.Largo, 1, 18, imagenNave);
                 animacion.IniciarAnimacion(16, true); // TODO: Frame por defecto es un parametro por defecto...
