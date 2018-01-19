@@ -232,11 +232,10 @@ namespace WPF_BatallaEspacial.Elementos
         {
             if (Estado == EstadoNave.ModoBatalla)
             {
-                string rutaFramesAnimacion = this.rutaAbsolutaImagenDestruccion; // TODO: COrregir
                 Image imagenNave = (Image)elementoDibujable;
-                animacion = new AnimacionFrameSprites(rutaFramesAnimacion, Dimenciones.Ancho, Dimenciones.Largo, 1, 18, imagenNave);
-                animacion.IniciarAnimacion(16, true); // TODO: Frame por defecto es un parametro por defecto...
-                Vidas = Vidas - 1; // TODO :Cuidado!
+                animacion = new AnimacionFrameSprites(rutaAbsolutaImagenDestruccion, Dimenciones.Ancho, Dimenciones.Largo, 1, 18, imagenNave);
+                animacion.IniciarAnimacion(16, true);
+                Vidas = Vidas - 1;
 		        PeriodoDesdeDestruccion = 0;
                 Estado = EstadoNave.Destruida;
             }

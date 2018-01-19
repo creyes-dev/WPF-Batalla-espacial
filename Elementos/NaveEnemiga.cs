@@ -16,34 +16,35 @@ using System.Windows.Media.Imaging;
 
 namespace WPF_BatallaEspacial.Elementos
 {
-    public class NaveEnemiga : Nave
+    public abstract class NaveEnemiga : Nave
     {
         public int DuracionDesplazamiento { get; set; }
         public int Puntaje { get; set; }
         public int PosicionVerticalPorDefecto;
+
         // contenedor de animaciones de la figura
-        Path camino;
-        Storyboard storyboard;
-        bool enMovimiento;
+        protected Path camino;
+        protected Storyboard storyboard;
+        protected bool enMovimiento;
 
         // componentes horizontales y verticales de la animación que sigue el camino
-        DoubleAnimationUsingPath animacionEjeX;
-        DoubleAnimationUsingPath animacionEjeY;
+        protected DoubleAnimationUsingPath animacionEjeX;
+        protected DoubleAnimationUsingPath animacionEjeY;
 
-        IGeneradorCaminoVuelo generadorCaminos;
+        protected IGeneradorCaminoVuelo generadorCaminos;
 
         public NaveEnemiga(string nombre, Canvas canvas, 
                             int posicionX, int posicionY, int ancho, int largo,
                             int posicionVerticalPorDefecto,
-                            int duracionDesplazamiento = 5, 
-                            int periodoInvisibilidad = 0, 
-                            int periodoModoSigilo = 0,
-                            int vidas = 1)
+                            int duracionDesplazamiento, 
+                            int periodoInvisibilidad, 
+                            int periodoModoSigilo,
+                            int vidas)
             : base(nombre, canvas, posicionX, posicionY, ancho, largo)
         {
             jugador = false;
             DuracionDesplazamiento = duracionDesplazamiento;
-            generadorCaminos = new GeneradorCaminoVueloCurvas();
+            //generadorCaminos = new GeneradorCaminoVueloCurvas();
             PosicionVerticalPorDefecto = posicionVerticalPorDefecto;
             PeriodoRecuperacionDisparo = 10;
             PeriodoInvisibilidad = periodoInvisibilidad;
@@ -51,15 +52,10 @@ namespace WPF_BatallaEspacial.Elementos
             Vidas = vidas;
         }
 
-        // Implementación del método abstracto para asociar las imagenes que 
-        // se monstrarán en el canvas
-        protected override void AsignarDirectoriosImagenes()
-        {
-            rutaAbsolutaImagenNave = Environment.CurrentDirectory + @"\Imagenes\enemiga1.png";
-            rutaAbsolutaImagenDisparo = Environment.CurrentDirectory + @"\Imagenes\rayo2.png";
-            rutaAbsolutaImagenDestruccion = Environment.CurrentDirectory + @"\Imagenes\enemiga1_explosion.png";
-        }
-
+        // Las subclases de NaveEnemiga implementarán sus propios métodos para 
+        // registrar sus recursos
+        protected override abstract void AsignarDirectoriosImagenes();
+        
         // Implementación del método abstracto para desplazar la nave
         public override void Desplazarse(ObjetosComunes.Direccion direccion)
         {

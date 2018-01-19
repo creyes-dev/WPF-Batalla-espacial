@@ -14,10 +14,9 @@ namespace WPF_BatallaEspacial.Logica
         public static Nivel Construir(int nroNivel, Canvas canvas)
         {
             int filaJugador = 536;
-            int filaEnemigaDefensor = 64;
-            int filaEnemigaAsalto;
-            int filaEnemigaExplorador;
-
+            int filaEnemigaAsalto = 64;
+            int filaEnemigaDefensora = 64;
+            int filaEnemigaExploradora = 160;
 
             Random numeroAzar = new Random();
             Espacio espacio = new Espacio("Espacio", canvas, 0, 0, 900, 1521);
@@ -30,25 +29,30 @@ namespace WPF_BatallaEspacial.Logica
             int periodoSigilo = numeroAzar.Next(0, 200);
 
             List<NaveEnemiga> navesEnemigas = new List<NaveEnemiga>();
-            NaveEnemiga naveEnemiga = new NaveEnemiga("NaveEnemiga1", canvas, 0, 0, 64, 64, filaEnemigaDefensor, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
+            NaveEnemiga naveEnemiga = new NaveEnemigaAsalto("Asalto1", canvas, 0, 0, 64, 64, filaEnemigaAsalto, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
 
             duracionDesplazamiento = 5;
             periodoInvisibilidad = numeroAzar.Next(0, 200);
             periodoSigilo = numeroAzar.Next(0, 200);
 
-            List<NaveEnemiga> navesEnemigas2 = new List<NaveEnemiga>();
-            NaveEnemiga naveEnemiga2 = new NaveEnemiga("NaveEnemiga2", canvas, 0, 0, 64, 64, filaEnemigaDefensor, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
+            NaveEnemiga naveEnemiga2 = new NaveEnemigaAsalto("Asalto2", canvas, 0, 0, 64, 64, filaEnemigaAsalto, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
 
             duracionDesplazamiento = 5;
             periodoInvisibilidad = numeroAzar.Next(0, 200);
             periodoSigilo = numeroAzar.Next(0, 200);
 
-            List<NaveEnemiga> navesEnemigas3 = new List<NaveEnemiga>();
-            NaveEnemiga naveEnemiga3 = new NaveEnemiga("NaveEnemiga", canvas, 0, 0, 64, 64, filaEnemigaDefensor, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
+            NaveEnemiga naveEnemiga3 = new NaveEnemigaDefensora("Defensora1", canvas, 0, 0, 64, 64, filaEnemigaDefensora, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
+
+            duracionDesplazamiento = 5;
+            periodoInvisibilidad = numeroAzar.Next(0, 200);
+            periodoSigilo = numeroAzar.Next(0, 200);
+
+            NaveEnemiga naveEnemiga4 = new NaveEnemigaExploradora("Exploradora1", canvas, 0, 0, 64, 64, filaEnemigaExploradora, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
 
             navesEnemigas.Add(naveEnemiga);
             navesEnemigas.Add(naveEnemiga2);
             navesEnemigas.Add(naveEnemiga3);
+            navesEnemigas.Add(naveEnemiga4);
 
             Nivel nuevoNivel = new Nivel(espacio, nroNivel, jugador, navesEnemigas);
 

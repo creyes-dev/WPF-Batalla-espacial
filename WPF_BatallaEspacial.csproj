@@ -72,6 +72,10 @@
     <Compile Include="Elementos\IGeneradorCaminoVuelo.cs" />
     <Compile Include="Elementos\Nave.cs" />
     <Compile Include="Elementos\NaveEnemiga.cs" />
+    <Compile Include="Elementos\NaveEnemigaAsalto.cs" />
+    <Compile Include="Elementos\NaveEnemigaCazadora.cs" />
+    <Compile Include="Elementos\NaveEnemigaDefensora.cs" />
+    <Compile Include="Elementos\NaveEnemigaExploradora.cs" />
     <Compile Include="Elementos\NaveJugador.cs" />
     <Compile Include="Elementos\Planeta.cs" />
     <Compile Include="Graficos\Animacion.cs" />
@@ -135,6 +139,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\enemiga1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\enemiga2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\rayo3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\rayo4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\enemiga3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\enemiga4.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
