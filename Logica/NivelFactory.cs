@@ -17,6 +17,7 @@ namespace WPF_BatallaEspacial.Logica
             int filaEnemigaAsalto = 64;
             int filaEnemigaDefensora = 64;
             int filaEnemigaExploradora = 160;
+            int filaEnemigaCazadora = 192;
 
             Random numeroAzar = new Random();
             Espacio espacio = new Espacio("Espacio", canvas, 0, 0, 900, 1521);
@@ -49,10 +50,17 @@ namespace WPF_BatallaEspacial.Logica
 
             NaveEnemiga naveEnemiga4 = new NaveEnemigaExploradora("Exploradora1", canvas, 0, 0, 64, 64, filaEnemigaExploradora, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
 
+            duracionDesplazamiento = 5;
+            periodoInvisibilidad = numeroAzar.Next(0, 200);
+            periodoSigilo = numeroAzar.Next(0, 200);
+
+            NaveEnemiga naveEnemiga5 = new NaveEnemigaCazadora("Cazadora1", canvas, 0, 0, 64, 64, filaEnemigaCazadora, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
+
             navesEnemigas.Add(naveEnemiga);
             navesEnemigas.Add(naveEnemiga2);
             navesEnemigas.Add(naveEnemiga3);
             navesEnemigas.Add(naveEnemiga4);
+            navesEnemigas.Add(naveEnemiga5);
 
             Nivel nuevoNivel = new Nivel(espacio, nroNivel, jugador, navesEnemigas);
 

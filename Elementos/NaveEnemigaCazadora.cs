@@ -29,14 +29,40 @@ namespace WPF_BatallaEspacial.Elementos
                     posicionVerticalPorDefecto, duracionDesplazamiento, periodoInvisibilidad, 
                     periodoModoSigilo, vidas)
         {
-            generadorCaminos = new GeneradorCaminoVueloOndulado();
+            generadorCaminos = new GeneradorCaminoVueloLineal();
+
+            // Suscribirse al evento de animación completa 
+            // para cambiar de algoritmo de generación del camino del movimiento 
+            animacionEjeX.Completed += CambiarAlgoritmoCaminoMovimiento;
+        }
+
+        private void CambiarAlgoritmoCaminoMovimiento(object sender, EventArgs e)
+        {
+            if (generadorCaminos.GetType() == typeof(GeneradorCaminoVueloLineal))
+            {
+                generadorCaminos = new GeneradorCaminoVueloOndulado();
+            }
+            else
+            {
+                if (generadorCaminos.GetType() == typeof(GeneradorCaminoVueloOndulado))
+                {
+                    generadorCaminos = new GeneradorCaminoVueloCurvas();
+                }
+                else
+                {
+                    generadorCaminos = new GeneradorCaminoVueloLineal();
+                }
+            }                
         }
 
         protected override void AsignarDirectoriosImagenes()
         {
-            rutaAbsolutaImagenNave = Environment.CurrentDirectory + @"\Imagenes\enemiga2.png";
-            rutaAbsolutaImagenDisparo = Environment.CurrentDirectory + @"\Imagenes\rayo3.png";
+            rutaAbsolutaImagenNave = Environment.CurrentDirectory + @"\Imagenes\enemiga4.png";
+            rutaAbsolutaImagenDisparo = Environment.CurrentDirectory + @"\Imagenes\rayo5.png";
             rutaAbsolutaImagenDestruccion = Environment.CurrentDirectory + @"\Imagenes\enemiga1_explosion.png";
         }
+
+
+
     }
 }

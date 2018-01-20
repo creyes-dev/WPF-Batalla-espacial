@@ -43,6 +43,7 @@ namespace WPF_BatallaEspacial.Elementos
             : base(nombre, canvas, posicionX, posicionY, ancho, largo)
         {
             jugador = false;
+            animacionEjeX = new DoubleAnimationUsingPath();
             DuracionDesplazamiento = duracionDesplazamiento;
             //generadorCaminos = new GeneradorCaminoVueloCurvas();
             PosicionVerticalPorDefecto = posicionVerticalPorDefecto;
@@ -153,7 +154,6 @@ namespace WPF_BatallaEspacial.Elementos
                     Canvas.Children.Add(camino);
 
                     // Crear la animación que mueve la figura horizontalmente
-                    animacionEjeX = new DoubleAnimationUsingPath();
                     animacionEjeX.PathGeometry = caminoOnda;
                     animacionEjeX.Duration = TimeSpan.FromSeconds(DuracionDesplazamiento);
                     animacionEjeX.Source = PathAnimationSource.X; // movimiento sobre el eje X
@@ -193,7 +193,7 @@ namespace WPF_BatallaEspacial.Elementos
             }
         }
 
-        private void AnimacionCompletada(object sender, EventArgs e)
+        protected void AnimacionCompletada(object sender, EventArgs e)
         {
             Image imagen = (Image) elementoDibujable;
 

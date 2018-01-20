@@ -31,7 +31,7 @@ namespace WPF_BatallaEspacial.Elementos
         {
             generadorCaminos = new GeneradorCaminoVueloCurvas();
         }
-
+        
         protected override void AsignarDirectoriosImagenes()
         {
             rutaAbsolutaImagenNave = Environment.CurrentDirectory + @"\Imagenes\enemiga3.png";
