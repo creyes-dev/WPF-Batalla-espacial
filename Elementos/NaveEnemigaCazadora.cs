@@ -36,6 +36,46 @@ namespace WPF_BatallaEspacial.Elementos
             animacionEjeX.Completed += CambiarAlgoritmoCaminoMovimiento;
         }
 
+        protected override void CargarCañones()
+        {
+            int test = 35;
+            int min_test = test - 10;
+            int max_test = test + 10;
+
+            string nombreCañonFrontalIzquierdo = Nombre + "_CañonFrontalIzquierdo";
+            Cañon cañonFrontalIzquierdo = new Cañon(nombreCañonFrontalIzquierdo, Canvas,
+                                             0, 0, 7, 14, -16,
+                                             rutaAbsolutaImagenDisparo,
+                                             ObjetosComunes.Direccion.Inferior,
+                                             min_test - 5, max_test + 5);
+
+            string nombreCañonFrontalDerecho = Nombre + "_CañonFrontalIzquierdo";
+            Cañon cañonFrontalDerecho = new Cañon(nombreCañonFrontalIzquierdo, Canvas,
+                                             0, 0, 7, 14, 16,
+                                             rutaAbsolutaImagenDisparo,
+                                             ObjetosComunes.Direccion.Inferior,
+                                             min_test - 5, max_test + 5);
+
+            string nombreCañonIzquierdo = Nombre + "_CañonIzquierdo";
+            Cañon cañonIzquierdo = new Cañon(nombreCañonIzquierdo, Canvas,
+                                             0, 0, 7, 14, -32,
+                                             rutaAbsolutaImagenDisparo,
+                                             ObjetosComunes.Direccion.Inferior,
+                                             min_test - 7, max_test + 7);
+
+            string nombreCañonDerecho = Nombre + "_CañonDerecho";
+            Cañon cañonDerecho = new Cañon(nombreCañonDerecho, Canvas,
+                                           0, 0, 7, 14, 32,
+                                           rutaAbsolutaImagenDisparo,
+                                           ObjetosComunes.Direccion.Inferior,
+                                           min_test + 3, max_test - 3);
+
+            Cañones.Add(cañonFrontalIzquierdo);
+            Cañones.Add(cañonFrontalDerecho);
+            Cañones.Add(cañonIzquierdo);
+            Cañones.Add(cañonDerecho);
+        }
+
         private void CambiarAlgoritmoCaminoMovimiento(object sender, EventArgs e)
         {
             if (generadorCaminos.GetType() == typeof(GeneradorCaminoVueloLineal))

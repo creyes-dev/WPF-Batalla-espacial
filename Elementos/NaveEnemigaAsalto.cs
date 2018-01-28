@@ -32,6 +32,30 @@ namespace WPF_BatallaEspacial.Elementos
             generadorCaminos = new GeneradorCaminoVueloLineal();
         }
 
+        protected override void CargarCañones()
+        {
+            int test = 35;
+            int min_test = test - 10;
+            int max_test = test + 10;
+
+            string nombreCañonIzquierdo = Nombre + "_CañonIzquierdo";
+            Cañon cañonIzquierdo = new Cañon(nombreCañonIzquierdo, Canvas,
+                                             0, 0, 7, 14, -32,
+                                             rutaAbsolutaImagenDisparo,
+                                             ObjetosComunes.Direccion.Inferior,
+                                             min_test - 4, max_test + 4);
+            
+            string nombreCañonDerecho = Nombre + "_CañonDerecho";
+            Cañon cañonDerecho = new Cañon(nombreCañonDerecho, Canvas,
+                                           0, 0, 7, 14, 32,
+                                           rutaAbsolutaImagenDisparo,
+                                           ObjetosComunes.Direccion.Inferior,
+                                           min_test + 4, max_test - 4);
+
+            Cañones.Add(cañonIzquierdo);
+            Cañones.Add(cañonDerecho);
+        }
+
         protected override void AsignarDirectoriosImagenes()
         {
             rutaAbsolutaImagenNave = Environment.CurrentDirectory + @"\Imagenes\enemiga1.png";

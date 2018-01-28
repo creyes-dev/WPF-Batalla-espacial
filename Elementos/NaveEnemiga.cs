@@ -47,7 +47,6 @@ namespace WPF_BatallaEspacial.Elementos
             DuracionDesplazamiento = duracionDesplazamiento;
             //generadorCaminos = new GeneradorCaminoVueloCurvas();
             PosicionVerticalPorDefecto = posicionVerticalPorDefecto;
-            PeriodoRecuperacionDisparo = 10;
             PeriodoInvisibilidad = periodoInvisibilidad;
             PeriodoModoSigilo = periodoModoSigilo;
             Vidas = vidas;
@@ -63,29 +62,6 @@ namespace WPF_BatallaEspacial.Elementos
             AnimarDesplazamiento(direccion);
         }
 
-        // Implementación del método abstracto para disparar
-        public override void IniciarDisparo()
-        {
-            if (Estado == EstadoNave.ModoBatalla)
-            {
-                if (PeriodoDesdeUltimoDisparo >= PeriodoRecuperacionDisparo)
-                {
-                    // Obtener la localizacion del origen del disparo (punto medio de la nave)
-                    int puntoInicioDisparoX = (int)(Posicion.PosicionX + (Dimenciones.Ancho / 2.0));
-                    int puntoInicioDisparoY = (int)(Posicion.PosicionY + (Dimenciones.Largo / 2.0));
-
-                    // TODO: El nombre del disparo se debe definir en la clase abstracta nave
-                    Disparo disparo = new Disparo("Disparo" + numeroAlAzar.Next(0, 32199170).ToString(), this.Canvas, puntoInicioDisparoX, puntoInicioDisparoY, 7, 32, rutaAbsolutaImagenDisparo);
-                    Disparos.Add(disparo);
-
-                    PeriodoDesdeUltimoDisparo = 0;
-                }
-                PeriodoDesdeUltimoDisparo += 1;
-            }
-        }
-
-        // Implementación de los pasos del TemplateMethod de dibujar
-        
         // 2. Obtener coordenadas
         protected override void ActualizarCoordenadas()
         {
@@ -98,25 +74,15 @@ namespace WPF_BatallaEspacial.Elementos
             Posicion.PosicionX = coordenadaAbsolutaX;
             Posicion.PosicionY = coordenadaAbsolutaY;
         }
-
+        
         // 3. Redibujar
-        protected override void Redibujar()
+        protected override void RedibujarNave()
         {
             // TODO: Corregir, no me parece correcto que redibujar = Desplazarse
             AnimarDesplazamiento(Direccion.Derecha);
-        }
-
-        // 4. Mover los disparos
-        protected override void MoverDisparos()
-        {
-            // La nave enemiga puede disparar en cualquier momento
+            // Una nave enemiga puede disparar tan pronto 
+            // como esté disponible el disparo
             Disparar();
-
-            foreach (Disparo disparo in Disparos)
-            {
-                disparo.Posicion.PosicionY += 5;
-                disparo.Dibujarse();
-            }
         }
 
         protected void AnimarDesplazamiento(Direccion direccion)

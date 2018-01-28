@@ -30,6 +30,7 @@ namespace WPF_BatallaEspacial.Logica
             int periodoSigilo = numeroAzar.Next(0, 200);
 
             List<NaveEnemiga> navesEnemigas = new List<NaveEnemiga>();
+
             NaveEnemiga naveEnemiga = new NaveEnemigaAsalto("Asalto1", canvas, 0, 0, 64, 64, filaEnemigaAsalto, duracionDesplazamiento, periodoInvisibilidad, periodoSigilo);
 
             duracionDesplazamiento = 5;

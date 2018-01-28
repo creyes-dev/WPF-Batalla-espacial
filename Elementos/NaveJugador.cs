@@ -16,12 +16,24 @@ namespace WPF_BatallaEspacial.Elementos
         {
             jugador = true;
             Vidas = 3;
-            PeriodoRecuperacionDisparo = 0;
             PeriodoInvulnerabilidad = 300;
             Estado = EstadoNave.Invulnerable;
         }
 
-        protected override void Redibujar()
+        protected override void CargarCañones()
+        {
+            // Un cañon es un elemento dibujable que no se dibuja en el Canvas 
+            // para ahorrar recursos
+            string nombreCañon = Nombre + "_CañonFrontal";
+            Cañon nuevoCañon = new Cañon(nombreCañon, Canvas,
+                                         0, 0, 7, 14, 0,
+                                         rutaAbsolutaImagenDisparo,
+                                         ObjetosComunes.Direccion.Superior,
+                                         30, 30);
+            Cañones.Add(nuevoCañon);
+        }
+
+        protected override void RedibujarNave()
         {
             Canvas.SetLeft(elementoDibujable, this.Posicion.PosicionX);
         }
@@ -33,41 +45,12 @@ namespace WPF_BatallaEspacial.Elementos
             rutaAbsolutaImagenDestruccion = Environment.CurrentDirectory + @"\Imagenes\player_explosion.png";
         }
 
-        public override void IniciarDisparo()
-        {
-            if (Estado == EstadoNave.ModoBatalla)
-            {
-
-                if (PeriodoDesdeUltimoDisparo >= PeriodoRecuperacionDisparo)
-                {
-                    // Obtener la localizacion del origen del disparo (punto medio de la nave)
-                    int puntoInicioDisparoX = (int)(Posicion.PosicionX + (Dimenciones.Ancho / 2.0));
-                    int puntoInicioDisparoY = (int)(Posicion.PosicionY + (Dimenciones.Largo / 2.0));
-
-                    // TODO: El nombre del disparo se debe definir en la clase abstracta nave
-                    Disparo disparo = new Disparo("Disparo" + numeroAlAzar.Next(0, 32199170).ToString(), this.Canvas, puntoInicioDisparoX, puntoInicioDisparoY, 7, 32, rutaAbsolutaImagenDisparo);
-                    Disparos.Add(disparo);
-
-                    PeriodoDesdeUltimoDisparo = 0;
-                }
-            }
-        }
-
         protected override void ActualizarCoordenadas()
         {
             // Hook method:
             // No es necesario obtener las coordenadas para el jugador 
             // porque automáticamente al moverse se actualiza 
             // Direccion.PosicionX y Direccion.PosicionY
-        }
-
-        protected override void MoverDisparos()
-        {
-            foreach (Disparo disparo in Disparos)
-            {
-                disparo.Posicion.PosicionY -= 5;
-                disparo.Dibujarse();
-            }
         }
 
         public override void Desplazarse(ObjetosComunes.Direccion direccion)

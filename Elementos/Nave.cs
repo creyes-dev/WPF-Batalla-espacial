@@ -13,28 +13,33 @@ namespace WPF_BatallaEspacial.Elementos
 {
     public abstract class Nave : ElementoDibujable
     {
-        public List<Disparo> Disparos { get; set; }
+        public EstadoNave Estado { get; set; }
         protected AnimacionFrameSprites animacion { get; set; }
+        protected Random numeroAlAzar;
         public int Vidas { get; set; }
 
+        protected List<Cañon> Cañones;
         protected bool jugador; // TODO: Eliminar
+
+        public int PeriodoInvulnerabilidad { get; set; }
+        public int PeriodoInvisibilidad { get; set; }
+        public int PeriodoModoSigilo { get; set; }
+        public int PeriodoDesdeDestruccion { get; set; } // TODO: Eliminar, hay que consultar por la propiedad Finalizar de la animación
+
+        public int PeriodoDesdeInvulnerabilidad { get; set; }
+        public int PeriodoDesdeInvisibilidad { get; set; }
+        public int PeriodoDesdeModoSigilo { get; set; }
 
         protected string rutaAbsolutaImagenNave;
         protected string rutaAbsolutaImagenDisparo;
         protected string rutaAbsolutaImagenDestruccion;
-
-        public int PeriodoRecuperacionDisparo { get; set; }
-        protected int PeriodoDesdeUltimoDisparo;
-        
-        protected Random numeroAlAzar;
-        public EstadoNave Estado { get; set; }
-        
+                
         public Nave(string nombre, Canvas canvas, 
                     int posicionX, int posicionY, int ancho, int largo) 
             : base(nombre, canvas, posicionX, posicionY, ancho, largo)
         {
+            Cañones = new List<Cañon>();
             numeroAlAzar = new Random();
-            Disparos = new List<Disparo>();
             Estado = EstadoNave.Invisible;
         }
 
@@ -43,13 +48,20 @@ namespace WPF_BatallaEspacial.Elementos
         // Cargar en canvas
         public void CargarEnCanvas()
         {
+            // 1. Obtener los directorios de las imagenes asociadas a la nave
             AsignarDirectoriosImagenes();
+            // 2. Cargar el elemento dibujable de la nave
             CargarImagen();
+            // 3. Cargar los componentes de la nave (cañones, turbinas de propulsión, etc)
+            CargarComponentes();
+            // 4. Cargar todos los recursos obtenidos en el canvas
             PosicionarImagenEnCanvas();
         }
 
+        // 1. Obtener los directorios de las imagenes asociadas a la nave
         protected abstract void AsignarDirectoriosImagenes();
 
+        // 2. Cargar el elemento dibujable de la nave
         protected void CargarImagen()
         {
             Image Imagen = new Image();
@@ -60,6 +72,16 @@ namespace WPF_BatallaEspacial.Elementos
             elementoDibujable = Imagen;
         }
 
+        // 3. Cargar los componentes de la nave (cañones, turbinas de propulsión, etc)
+        protected void CargarComponentes()
+        {
+            // Cargar los cañones de la nave
+            CargarCañones();
+        }
+
+        protected abstract void CargarCañones();
+
+        // 4. Cargar todos los recursos obtenidos en el canvas
         protected void PosicionarImagenEnCanvas()
         {
             Image Imagen = (Image) elementoDibujable;
@@ -78,12 +100,25 @@ namespace WPF_BatallaEspacial.Elementos
         {
             if (Estado == EstadoNave.ModoBatalla)
             {
-                IniciarDisparo();
+                // Si hay un cañon con disparo disponible proceder a disparar
+                foreach (Cañon canion in Cañones)
+                {
+                    if (canion.DisparoDisponible)
+                    {
+                        // Reposicionar canion
+                        int posicionMitadNaveY = this.Posicion.PosicionY + (Dimenciones.Largo / 2);
+                        int posicionMitadNaveX = this.Posicion.PosicionX + (Dimenciones.Ancho / 2);
+                        
+                        canion.Posicion.PosicionY = posicionMitadNaveY;
+                        canion.Posicion.PosicionX = posicionMitadNaveX + canion.PosicionHorizontalRelativa;
+
+                        // Iniciar disparo
+                        canion.IniciarDisparo();
+                    }
+                }
             }
         }
-
-        public abstract void IniciarDisparo();
-
+        
         public override void Dibujarse()
         {
             // 1. Actualizar el estado (invisible o indestructible)
@@ -94,21 +129,9 @@ namespace WPF_BatallaEspacial.Elementos
             Redibujar();
             // 4. Definir opacidad
             DefinirOpacidad();
-            // 5. Mover los disparos
-            MoverDisparos();
-            // 6. Dibujar los disparos y remover aquellos que quedaron fuera de rango
-            DibujarRemoverDisparos();
         }
 
-        public int PeriodoInvulnerabilidad { get; set; }
-        public int PeriodoInvisibilidad { get; set; }
-        public int PeriodoModoSigilo { get; set; }
-        public int PeriodoDesdeDestruccion { get; set; } // TODO: Eliminar, hay que consultar por la propiedad Finalizar de la animación
-
-        public int PeriodoDesdeInvulnerabilidad { get; set; }
-        public int PeriodoDesdeInvisibilidad { get; set; }
-        public int PeriodoDesdeModoSigilo { get; set; }
-
+        // 1. Actualizar el estado
         public void ActualizarEstado()
         {
             if (Estado != EstadoNave.ModoBatalla)
@@ -116,9 +139,17 @@ namespace WPF_BatallaEspacial.Elementos
                 if (Estado == EstadoNave.Invulnerable)
                 {
                     if (PeriodoDesdeInvulnerabilidad < PeriodoInvulnerabilidad)
+                    {
                         PeriodoDesdeInvulnerabilidad += 1;
+                    }   
                     else
-                        Estado = EstadoNave.ModoBatalla;
+                    {
+                        foreach (Cañon canion in Cañones)
+	                    {
+		                    canion.AprontarseParaNuevoDisparo();
+                            Estado = EstadoNave.ModoBatalla;
+	                    }
+                    }   
                 }
                 else
                 {
@@ -151,6 +182,10 @@ namespace WPF_BatallaEspacial.Elementos
                             }
                             else
                             {
+                                foreach (Cañon canion in Cañones)
+                                {
+                                    canion.AprontarseParaNuevoDisparo();
+                                }
                                 Estado = EstadoNave.ModoBatalla;
                             }
                         }
@@ -171,7 +206,7 @@ namespace WPF_BatallaEspacial.Elementos
 
                                     if (Vidas == 0)
                                     {
-                                        if (Disparos.Count > 0)
+                                        if (CantidadDisparos > 0)
                                             Removible = false;
                                         else
                                             Removible = true;
@@ -192,9 +227,27 @@ namespace WPF_BatallaEspacial.Elementos
             }
         }
 
+        // 2. Obtener coordenadas
         protected abstract void ActualizarCoordenadas();
-        protected abstract void Redibujar();
 
+        // 3. Redibujar
+        public void Redibujar()
+        {
+            RedibujarNave();
+            RedibujarCaniones();
+        }
+
+        protected abstract void RedibujarNave();
+
+        protected void RedibujarCaniones()
+        {
+            foreach (Cañon canion in Cañones)
+            {
+                canion.Dibujarse();
+            }
+        }
+
+        // 4. Definir opacidad
         protected void DefinirOpacidad()
         {
             elementoDibujable.Opacity = 10;
@@ -205,29 +258,32 @@ namespace WPF_BatallaEspacial.Elementos
                     elementoDibujable.Opacity = numeroAlAzar.Next(4, 9) / 10.0;
         }
 
-        protected abstract void MoverDisparos();
-
-        protected void DibujarRemoverDisparos()
+        public List<Disparo> Disparos
         {
-            List<Disparo> disparosFueraRango = new List<Disparo>();
-
-            foreach (Disparo disparo in Disparos)
+            get
             {
-                if (disparo.Posicion.PosicionY < 0 - disparo.Dimenciones.Largo || disparo.Posicion.PosicionY > Canvas.Height + disparo.Dimenciones.Largo)
+                List<Disparo> disparos = new List<Disparo>();
+                foreach (Cañon canion in Cañones)
                 {
-                    Canvas.Children.Remove(disparo.SpriteSheet);
-                    disparosFueraRango.Add(disparo);
+                    disparos.AddRange(canion.Disparos);
                 }
-                disparo.Dibujarse();
-            }
-
-            foreach (Disparo disparoFueraRango in disparosFueraRango)
-            {
-                Disparos.Remove(disparoFueraRango);
-                disparoFueraRango.Removerse();
+                return disparos;
             }
         }
 
+        protected int CantidadDisparos 
+        {
+            get
+            {
+                int cantDisparos = 0;
+                foreach (Cañon cañon in Cañones)
+                {
+                    cantDisparos += cañon.CantidadDisparos;
+                }
+                return cantDisparos;
+            }
+        }
+                
         public void Destruirse()
         {
             if (Estado == EstadoNave.ModoBatalla)
