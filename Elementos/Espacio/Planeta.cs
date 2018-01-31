@@ -9,7 +9,7 @@ using System.Media;
 using System.Windows.Shapes;
 using System.Windows.Controls;
 
-namespace WPF_BatallaEspacial.Elementos
+namespace WPF_BatallaEspacial.Elementos.Espacio
 {
     public class Planeta : ElementoDibujable
     {

@@ -13,8 +13,10 @@ using System.Windows.Threading;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using WPF_BatallaEspacial.Elementos.CaminoMovimiento;
+using WPF_BatallaEspacial.Elementos.Estados;
 
-namespace WPF_BatallaEspacial.Elementos
+namespace WPF_BatallaEspacial.Elementos.Naves
 {
     public abstract class NaveEnemiga : Nave
     {

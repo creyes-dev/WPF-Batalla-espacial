@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using WPF_BatallaEspacial.Elementos.Estados;
+using WPF_BatallaEspacial.Elementos.Disparos;
 using WPF_BatallaEspacial.Graficos;
 using WPF_BatallaEspacial.ObjetosComunes;
 
-namespace WPF_BatallaEspacial.Elementos
+namespace WPF_BatallaEspacial.Elementos.Naves
 {
     public abstract class Nave : ElementoDibujable
     {
@@ -80,7 +82,7 @@ namespace WPF_BatallaEspacial.Elementos
         }
 
         protected abstract void CargarCañones();
-
+         
         // 4. Cargar todos los recursos obtenidos en el canvas
         protected void PosicionarImagenEnCanvas()
         {

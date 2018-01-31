@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using WPF_BatallaEspacial.Elementos.Estados;
+using WPF_BatallaEspacial.Elementos.Disparos;
 
-namespace WPF_BatallaEspacial.Elementos
+namespace WPF_BatallaEspacial.Elementos.Naves
 {
     public class NaveJugador : Nave
     {

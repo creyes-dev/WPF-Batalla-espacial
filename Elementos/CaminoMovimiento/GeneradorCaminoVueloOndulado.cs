@@ -8,9 +8,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WPF_BatallaEspacial.ObjetosComunes;
 
-namespace WPF_BatallaEspacial.Elementos
+namespace WPF_BatallaEspacial.Elementos.CaminoMovimiento
 {
-    public class GeneradorCaminoVueloCurvas : IGeneradorCaminoVuelo
+    public class GeneradorCaminoVueloOndulado : IGeneradorCaminoVuelo
     {
         public PathGeometry ObtenerCamino(Posicion posicionInicial, Posicion posicionFinal)
         {
@@ -27,12 +27,14 @@ namespace WPF_BatallaEspacial.Elementos
             camino.Figures.Add(caminoFigura);
 
             int anchoCiclo;
+            int mitadCiclo;
+            int distanciaPuntosCiclo;
+            int distanciaEntreDosPuntosCiclo;
             int cantCiclos = 3;
-            int puntoNeutroY = 160;
-
-            int posicionMaximaY = puntoNeutroY + 64;
-            int posicionMinimaY = puntoNeutroY - 64;
             
+            int puntoExtremoYPrimerCiclo = posicionInicial.PosicionY - 100;
+            int puntoExtremoYSegundoCiclo = posicionInicial.PosicionY + 100;
+
             int posicionXActual = posicionInicial.PosicionX;
             int posicionYActual = posicionInicial.PosicionY;
 
@@ -58,43 +60,22 @@ namespace WPF_BatallaEspacial.Elementos
                     anchoCiclo = numero.Next(200, 330);
                 }
 
-                // PosicionXActual es la posicon del ultimo ciclo procesado la posicion actual es la siguiente:
-                int posicionXTemporal = posicionXActual;
-                
-                // Generar puntos intermedios
-                while (posicionXTemporal != posicionXActual + (anchoCiclo * direccion))
-                {
-                    if (direccion == 1)
-                    {
-                        posicionXTemporal = numero.Next(posicionXTemporal + 60,
-                                                        posicionXTemporal + 120);
-                    }
-                    else
-                    {
-                        posicionXTemporal = numero.Next(posicionXTemporal - 120,
-                                                        posicionXTemporal - 60);
-                    }
+                mitadCiclo = Convert.ToInt32(anchoCiclo / 2); // punto de inflexión
+                distanciaPuntosCiclo = Convert.ToInt32(mitadCiclo / 3); // Distancia entre los puntos máximos y mínimos de Y
+                distanciaEntreDosPuntosCiclo = mitadCiclo - (distanciaPuntosCiclo * 2);
 
-                    posicionYActual = numero.Next(posicionYActual - 80, posicionYActual + 80);
-
-                    if (((posicionXTemporal > posicionXActual + anchoCiclo) && (direccion == 1)) ||
-                        ((posicionXTemporal < posicionXActual - anchoCiclo) && (direccion == -1)))
-                    {
-                        posicionXTemporal = posicionXActual + anchoCiclo * direccion;
-                    }
-
-                    if (posicionYActual > posicionMaximaY)
-                    {
-                        posicionYActual = posicionMaximaY;
-                    }
-
-                    if (posicionYActual < posicionMinimaY)
-                    {
-                        posicionYActual = posicionMinimaY;
-                    }
-
-                    segmentoBezier.Points.Add(new Point(posicionXTemporal, posicionYActual));
-                }
+                posicionXActual = posicionXActual + distanciaPuntosCiclo * direccion;
+                segmentoBezier.Points.Add(new Point(posicionXActual, puntoExtremoYPrimerCiclo));
+                posicionXActual = posicionXActual + distanciaEntreDosPuntosCiclo * direccion;
+                segmentoBezier.Points.Add(new Point(posicionXActual, puntoExtremoYPrimerCiclo));
+                posicionXActual = posicionXActual + distanciaPuntosCiclo * direccion;
+                segmentoBezier.Points.Add(new Point(posicionXActual, posicionInicial.PosicionY));
+                posicionXActual = posicionXActual + distanciaPuntosCiclo * direccion;
+                segmentoBezier.Points.Add(new Point(posicionXActual, puntoExtremoYSegundoCiclo));
+                posicionXActual = posicionXActual + distanciaEntreDosPuntosCiclo * direccion;
+                segmentoBezier.Points.Add(new Point(posicionXActual, puntoExtremoYSegundoCiclo));
+                posicionXActual = posicionXActual + distanciaPuntosCiclo * direccion;
+                segmentoBezier.Points.Add(new Point(posicionXActual, posicionInicial.PosicionY));
             }
 
             return camino;

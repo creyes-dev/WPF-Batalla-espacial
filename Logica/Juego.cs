@@ -9,6 +9,9 @@ using System.Windows.Input;
 using WPF_BatallaEspacial.Logica;
 using WPF_BatallaEspacial.Elementos;
 using WPF_BatallaEspacial.ObjetosComunes;
+using WPF_BatallaEspacial.Elementos.Naves;
+using WPF_BatallaEspacial.Elementos.Estados;
+using WPF_BatallaEspacial.Elementos.Disparos;
 
 namespace WPF_BatallaEspacial.Logica
 {

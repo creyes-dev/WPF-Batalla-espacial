@@ -13,8 +13,10 @@ using System.Windows.Threading;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using WPF_BatallaEspacial.Elementos.CaminoMovimiento;
+using WPF_BatallaEspacial.Elementos.Disparos;
 
-namespace WPF_BatallaEspacial.Elementos
+namespace WPF_BatallaEspacial.Elementos.Naves
 {
     public class NaveEnemigaCazadora : NaveEnemiga
     {
@@ -60,14 +62,14 @@ namespace WPF_BatallaEspacial.Elementos
             Cañon cañonIzquierdo = new Cañon(nombreCañonIzquierdo, Canvas,
                                              0, 0, 7, 14, -32,
                                              rutaAbsolutaImagenDisparo,
-                                             ObjetosComunes.Direccion.Inferior,
+                                             ObjetosComunes.Direccion.InferiorIzquierda,
                                              min_test - 7, max_test + 7);
 
             string nombreCañonDerecho = Nombre + "_CañonDerecho";
             Cañon cañonDerecho = new Cañon(nombreCañonDerecho, Canvas,
                                            0, 0, 7, 14, 32,
                                            rutaAbsolutaImagenDisparo,
-                                           ObjetosComunes.Direccion.Inferior,
+                                           ObjetosComunes.Direccion.InferiorDerecha,
                                            min_test + 3, max_test - 3);
 
             Cañones.Add(cañonFrontalIzquierdo);

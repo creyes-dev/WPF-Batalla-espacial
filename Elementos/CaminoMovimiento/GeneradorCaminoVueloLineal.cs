@@ -8,7 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WPF_BatallaEspacial.ObjetosComunes;
 
-namespace WPF_BatallaEspacial.Elementos
+namespace WPF_BatallaEspacial.Elementos.CaminoMovimiento
 {
     public class GeneradorCaminoVueloLineal : IGeneradorCaminoVuelo
     {

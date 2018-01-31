@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using WPF_BatallaEspacial.Elementos;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using WPF_BatallaEspacial.Elementos.Espacio;
+using WPF_BatallaEspacial.Elementos.Naves;
 
 namespace WPF_BatallaEspacial.Logica
 {

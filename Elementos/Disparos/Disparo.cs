@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using WPF_BatallaEspacial.Graficos;
 using System.Windows.Media.Imaging;
 
-namespace WPF_BatallaEspacial.Elementos
+namespace WPF_BatallaEspacial.Elementos.Disparos
 {
     public class Disparo : ElementoDibujable
     {
@@ -40,7 +40,7 @@ namespace WPF_BatallaEspacial.Elementos
 
         public override void Dibujarse()
         {
-            Canvas.SetTop(SpriteSheet, Posicion.PosicionX);
+            Canvas.SetLeft(SpriteSheet, Posicion.PosicionX);
             Canvas.SetTop(SpriteSheet, Posicion.PosicionY);
         }
 

@@ -11,6 +11,8 @@ namespace WPF_BatallaEspacial.ObjetosComunes
         Derecha,
         Izquierda,
         Superior,
-        Inferior
+        Inferior,
+        InferiorDerecha,
+        InferiorIzquierda
     }
 }

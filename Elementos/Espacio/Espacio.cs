@@ -14,7 +14,7 @@ using System.Windows.Media.Animation;
 using System.Text.RegularExpressions;
 
 
-namespace WPF_BatallaEspacial.Elementos
+namespace WPF_BatallaEspacial.Elementos.Espacio
 {
     public class Espacio : ElementoDibujable
     {

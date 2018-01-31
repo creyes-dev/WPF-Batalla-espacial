@@ -62,23 +62,23 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Elementos\Cañon.cs" />
-    <Compile Include="Elementos\Disparo.cs" />
+    <Compile Include="Elementos\Disparos\Cañon.cs" />
+    <Compile Include="Elementos\Disparos\Disparo.cs" />
     <Compile Include="Elementos\ElementoDibujable.cs" />
-    <Compile Include="Elementos\Espacio.cs" />
-    <Compile Include="Elementos\EstadoNave.cs" />
-    <Compile Include="Elementos\GeneradorCaminoVueloCurvas.cs" />
-    <Compile Include="Elementos\GeneradorCaminoVueloLineal.cs" />
-    <Compile Include="Elementos\GeneradorCaminoVueloOndulado.cs" />
-    <Compile Include="Elementos\IGeneradorCaminoVuelo.cs" />
-    <Compile Include="Elementos\Nave.cs" />
-    <Compile Include="Elementos\NaveEnemiga.cs" />
-    <Compile Include="Elementos\NaveEnemigaAsalto.cs" />
-    <Compile Include="Elementos\NaveEnemigaCazadora.cs" />
-    <Compile Include="Elementos\NaveEnemigaDefensora.cs" />
-    <Compile Include="Elementos\NaveEnemigaExploradora.cs" />
-    <Compile Include="Elementos\NaveJugador.cs" />
-    <Compile Include="Elementos\Planeta.cs" />
+    <Compile Include="Elementos\Espacio\Espacio.cs" />
+    <Compile Include="Elementos\Estados\EstadoNave.cs" />
+    <Compile Include="Elementos\CaminoMovimiento\GeneradorCaminoVueloCurvas.cs" />
+    <Compile Include="Elementos\CaminoMovimiento\GeneradorCaminoVueloLineal.cs" />
+    <Compile Include="Elementos\CaminoMovimiento\GeneradorCaminoVueloOndulado.cs" />
+    <Compile Include="Elementos\CaminoMovimiento\IGeneradorCaminoVuelo.cs" />
+    <Compile Include="Elementos\Naves\Nave.cs" />
+    <Compile Include="Elementos\Naves\NaveEnemiga.cs" />
+    <Compile Include="Elementos\Naves\NaveEnemigaAsalto.cs" />
+    <Compile Include="Elementos\Naves\NaveEnemigaCazadora.cs" />
+    <Compile Include="Elementos\Naves\NaveEnemigaDefensora.cs" />
+    <Compile Include="Elementos\Naves\NaveEnemigaExploradora.cs" />
+    <Compile Include="Elementos\Naves\NaveJugador.cs" />
+    <Compile Include="Elementos\Espacio\Planeta.cs" />
     <Compile Include="Graficos\Animacion.cs" />
     <Compile Include="Graficos\AnimacionFrameSprites.cs" />
     <Compile Include="Logica\Juego.cs" />
@@ -159,6 +159,7 @@
   <ItemGroup>
     <Resource Include="Imagenes\rayo5.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
