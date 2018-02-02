@@ -170,7 +170,11 @@ namespace WPF_BatallaEspacial.Elementos.Naves
                             }
                             else
                             {
-                                Removible = true; // Todo: Fin del modo invisibilidad
+                               // si no posee vidas y sigue invisible es porque esta lista para ser removida, solo se removera en caso de que no posea mas disparos
+                                if (Disparos.Count == 0) 
+                                {
+                                    Removible = true; // Todo: Fin del modo invisibilidad
+                                }
                             }
                         }
                     }

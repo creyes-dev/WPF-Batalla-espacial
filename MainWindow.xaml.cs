@@ -32,7 +32,6 @@ namespace WPF_BatallaEspacial
         private void Canvas_Loaded(object sender, RoutedEventArgs e)
         {
             juego.IniciarJuego();
-            
         }
 
     }
